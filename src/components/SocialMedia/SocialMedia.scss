@@ -1,0 +1,52 @@
+.socialMedia {
+  background-color: #efefef;
+  min-height: 550px;
+  width: 100%;
+  &-layout {
+    height: 100%;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+  &__container {
+    background-color: #fff;
+    width: 700px;
+    min-height: 450px;
+    border-radius: 10px;
+    padding: 60px;
+    border: 1px solid #ccc;
+  }
+  &__btn {
+    height: 50px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-size: 16px;
+    &.google {
+      background-color: #3f7ee8 !important;
+    }
+    &.facebook {
+      background-color: #48619c !important;
+    }
+    &-icon {
+      font-size: 24px;
+      margin-right: 12px;
+      transform: translateY(-5%);
+    }
+  }
+  &__header {
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  &__question {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    margin-top: 16px;
+  }
+}

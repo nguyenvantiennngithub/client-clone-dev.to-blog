@@ -1,0 +1,12 @@
+.login {
+  &__header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  &__btnSubmit {
+    background-color: #3b49df;
+    font-size: 18px;
+    font-weight: 500;
+    height: 50px;
+  }
+}

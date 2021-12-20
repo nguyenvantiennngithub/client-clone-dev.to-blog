@@ -1,0 +1,27 @@
+.header {
+  height: 60px;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  position: sticky;
+  background-color: #fff;
+  top: 0;
+  // left: 0;
+  // z-index: 2000;
+  // width: 100%;
+  &__logo {
+    font-size: 28px;
+    font-weight: 500;
+  }
+  &__search {
+    height: 38px;
+    width: 300px;
+  }
+}
+
+.ml-8 {
+}
+
+.fw500 {
+  font-weight: 500;
+  font-size: 18px;
+}
