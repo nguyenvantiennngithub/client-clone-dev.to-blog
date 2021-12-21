@@ -15,9 +15,11 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
             return {
                 ...state,
                 isLoading: false,
-                token: true,
+                error: false,
+                token: action.payload.success,
                 user: action.payload.user,
                 message: action.payload.message
+
             }
         }
 
@@ -27,13 +29,15 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
                 isLoading: false,
                 token: undefined,
                 message: '',
+                error: true,
             }
         }
         case getType(verifyToken):{
             return {
                 ...state,
-                token: action.payload.data,
-                user: action.payload.user
+                token: action.payload.token,
+                user: action.payload.user,
+                isVerify: true,
             }
         }
 
@@ -42,6 +46,7 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
             return {
                 ...state,
                 token: false,
+                isVerify: true,
                 user: undefined
             }
         }

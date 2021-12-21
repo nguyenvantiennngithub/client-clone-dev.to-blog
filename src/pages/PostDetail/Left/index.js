@@ -1,34 +1,13 @@
-import { useEffect, useState } from "react";
 import { BsBookmark, BsBookmarkFill, BsFillSuitHeartFill, BsSuitHeart } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-import { checkItemInList } from "../../../helpers";
 import { bookmark, heartPost } from "../../../redux/actions";
+import useToggle from '../../../hooks/useToggle'
+function Left({post, isLoggedIn, user}){
 
-function Left({post, author}){
+    const username = user && user.username;
+    const [isHeart, handleToggleHeart] = useToggle(username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug})
+    const [isBookmark, handleToggleBookmark] = useToggle(username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug});
 
-    const [isHeart, setIsHeart] = useState(checkItemInList(author.username, post.heart));
-    const [isBookmark, setIsBookmark] = useState(checkItemInList(post.slug, author.bookmark));
-    const dispatch = useDispatch();
-
-    useEffect(()=>{//handle for heart
-        setIsHeart(checkItemInList(author.username, post.heart))
-    }, [post.heart, author.username])
-
-    useEffect(()=>{//handle for bookmark
-        setIsBookmark(checkItemInList(post.slug, author.bookmark))
-    }, [post.slug, author.bookmark])
-
-    function handleToggleHeart(){//handle onclick toggle heart
-        dispatch(heartPost.heartPostRequest({isHeart: !isHeart, slug: post.slug}))//true is Heart and false is unheart
-        setIsHeart(!isHeart);
-    }
-
-    function handleToggleBookmark(){//handle onclick toggle heart
-        dispatch(bookmark.bookmarkRequest({isBookmark: !isBookmark, slug: post.slug}))//true is Heart and false is unheart
-        setIsBookmark(!isBookmark);
-    }
-
-
+    
     return (
         <div className="postDetail__left-fixed">
             <div className="postDetail__left">

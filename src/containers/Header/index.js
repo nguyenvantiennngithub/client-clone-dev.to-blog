@@ -1,10 +1,11 @@
 import React from 'react';
-import {Navbar, NavbarBrand, Input, Nav, NavItem, Button, Container} from 'reactstrap'
+import {Navbar, Input, Nav, NavItem, Button, Container} from 'reactstrap'
 import './Header.scss'
 import LoggedIn from './LoggedIn';
 import Login from './Login/'
 import {useSelector} from 'react-redux'
 import {loginUser$} from '../../redux/selectors/'
+import { Link } from 'react-router-dom';
 function Header(){
 
     const {token} = useSelector(loginUser$);
@@ -15,7 +16,7 @@ function Header(){
                 <Navbar light>
                     <Nav>
                         <NavItem>
-                            <NavbarBrand href="/" className='header__logo'>VanTiennn</NavbarBrand>
+                            <Link to='/' className='header__logo'>VanTiennn</Link>
                         </NavItem>
                         <NavItem>
                             <Input className="header__search" placeholder="Search..."></Input>

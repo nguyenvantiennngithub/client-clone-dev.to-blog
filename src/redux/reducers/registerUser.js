@@ -15,7 +15,8 @@ function userReducers(state = INIT_STATE.registerUser, action){
             return {
                 ...state,
                 isLoading: false,
-                message: action.payload.message
+                message: action.payload.message,
+                isError: false,
             }
         }
 
@@ -24,6 +25,7 @@ function userReducers(state = INIT_STATE.registerUser, action){
                 ...state,
                 isLoading: false,
                 message: '',
+                isError: true,
             }
         }
 

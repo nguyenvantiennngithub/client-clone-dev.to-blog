@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap"
-import { checkItemInList } from "../../../helpers";
 import { following } from "../../../redux/actions";
+import useToggle from '../../../hooks/useToggle'
+function Right({author, isLoggedIn, user}){
 
-function Right({author}){
-
-    var myUser = useSelector((state)=> state.loginUser.user) || {}
-    const dispatch = useDispatch();
-    const [isFollowing, setIsFollowing] = useState(checkItemInList(author.username, myUser.following));
-    useEffect(()=>{//handle for heart
-        setIsFollowing(checkItemInList(author.username, myUser.following))
-    }, [author, myUser])
-
-    function handleToggleFollowing(){//handle onclick toggle Following
-        dispatch(following.followingRequest({isFollowing: !isFollowing, author: author.username}))//true is Following and false is unFollowing
-        setIsFollowing(!isFollowing);
-    }
+    const username = user && user.username;
+    const userFollowing = user && user.following;
+    const [isFollowing, handleToggleFollowing] = useToggle(author.username, userFollowing, isLoggedIn, following.followingRequest, {author: author.username})
 
     return (
         <div className="postDetail__right">
@@ -33,13 +22,11 @@ function Right({author}){
                 </div>
             </div>
             {
-                (author.username === myUser.username) ? 
-                    <Button  className="postDetail__right-follow" color="primary" block>Edit profile</Button>
-                :        
-                    (isFollowing) ?
-                            <Button  className="postDetail__right-follow" onClick={handleToggleFollowing} color="secondary" block>Following</Button>
+                (author.username === username) ? <Button  className="postDetail__right-follow" color="primary" block>Edit profile</Button>
+                    :        
+                    (isFollowing) ? <Button  className="postDetail__right-follow" onClick={handleToggleFollowing} color="secondary" block>Following</Button>
                         :
-                            <Button  className="postDetail__right-follow" onClick={handleToggleFollowing} color="primary" block>Follow</Button>
+                        <Button  className="postDetail__right-follow" onClick={handleToggleFollowing} color="primary" block>Follow</Button>
             }
             
             <div className="postDetail__right-footer">

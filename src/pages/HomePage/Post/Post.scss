@@ -1,0 +1,92 @@
+.post {
+  border-radius: 8px;
+  background-color: #fff;
+  min-height: 100px;
+  box-shadow: 0 0 0 1px #ccc;
+  margin-bottom: 16px;
+  padding: 16px 32px;
+  &__header {
+    display: flex;
+    &-img {
+      height: 36px;
+      width: 36px;
+      border-radius: 50%;
+      &-container {
+        display: flex;
+        margin-top: 4px;
+        align-items: center;
+      }
+    }
+    &-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 8px;
+      &-username {
+        font-size: 18px;
+        font-weight: 500;
+      }
+      &-date {
+        font-size: 12px;
+        color: #717171;
+      }
+    }
+  }
+  &__title {
+    margin-top: 10px;
+    &-link {
+      text-decoration: none;
+      color: #000;
+    }
+    cursor: pointer;
+    &:hover {
+      color: blue;
+    }
+  }
+  &__tags {
+    margin-bottom: 16px;
+
+    &-item {
+      cursor: pointer;
+      text-decoration: none;
+      color: #3d3d3d;
+      padding: 4px 8px;
+      &:hover {
+        background-color: #e9effe;
+        border: 1px solid;
+        border-radius: 8px;
+      }
+    }
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    &-left {
+      display: flex;
+      &-item {
+        margin-right: 16px;
+        display: flex;
+        padding: 4px 8px;
+        cursor: pointer;
+
+        &:hover {
+          border-radius: 8px;
+          background-color: #f6f6f6;
+        }
+        &-icon {
+          display: block;
+          margin: auto 0;
+          margin-right: 4px;
+          &.heart {
+            color: red;
+          }
+          &.bookmark {
+            color: blue;
+          }
+          &.rotate90 {
+            transform: scaleX(-1);
+          }
+        }
+      }
+    }
+  }
+}

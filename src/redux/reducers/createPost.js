@@ -16,6 +16,7 @@ function createPostReducers(state = INIT_STATE.createPost, action){
             return {
                 ...state,
                 isLoading: false,
+                isError: false,
             }
         }
 
@@ -23,6 +24,7 @@ function createPostReducers(state = INIT_STATE.createPost, action){
             return{
                 ...state,
                 isLoading: false,
+                isError: true,
             }
         }
 

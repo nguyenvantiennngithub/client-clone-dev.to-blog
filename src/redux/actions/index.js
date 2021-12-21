@@ -50,10 +50,32 @@ const following = createActions({
     followingSuccess: (payload) => payload,
     followingFailure: (err) => err,
 })
+const clearPostAuthor = createAction('clearPostAuthor');
+
+const getPosts = createActions({
+    getPostsRequest: (payload) => payload,
+    getPostsSuccess: (payload) => payload,
+    getPostsFailure: (err) => err,
+})
+
+
+const updatePostOfPosts = createActions({
+    updatePostOfPostsRequest: (payload) => payload,
+    updatePostOfPostsSuccess: (payload) => payload,
+    updatePostOfPostsFailure: (err) => err,
+})
+
+
+const editPost = createActions({
+    editPostRequest: (payload) => payload,
+    editPostSuccess: (payload) => payload,
+    editPostFailure: (err) => err,
+})
 
 export {
     getType, 
     registerUser, loginUser, verifyToken, signOut, 
-    createPost, getPost, heartPost, bookmark,
-    following
+    createPost, editPost, getPost, heartPost, bookmark,
+    following, clearPostAuthor,
+    getPosts, updatePostOfPosts
 }

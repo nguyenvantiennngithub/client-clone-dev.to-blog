@@ -130,11 +130,8 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 16px;
-    position: fixed;
     z-index: 2;
     &-fixed {
-      position: relative;
-      display: flex;
       justify-content: center;
       z-index: 3;
     }

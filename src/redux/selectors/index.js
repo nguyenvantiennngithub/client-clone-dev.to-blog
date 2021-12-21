@@ -1,5 +1,5 @@
 const registerUser$ = (state) =>{
-    return state.registerUser.message
+    return state.registerUser
 } 
 const loginUser$ = (state) =>{
     return state.loginUser

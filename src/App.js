@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import {loginUser$} from './redux/selectors/'
 import {verifyToken} from './redux/actions/'
@@ -8,20 +8,29 @@ import Header from "./containers/Header";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";  
-import CreatePost from './pages/CreatePost'
 import { useEffect } from "react";
 import PostDetail from "./pages/PostDetail";
-
+import { Spinner } from "reactstrap";
+import CreatePostPage from "./pages/CreatePostPage";
+import EditPostPage from "./pages/EditPostPage";
+import NotFound from "./pages/NotFound";
 
 function App() {  
   const dispatch = useDispatch();
+  const {token, isVerify, user} = useSelector(loginUser$);
   
   //Middleware check if user dont logged 
   //will redirect to login
   const CheckLogin = function ({children}){
-    const {token} = useSelector(loginUser$);
-    if (token === false){
-      return <Navigate to="/login" />;
+    if (!isVerify){
+      return (
+        <Spinner>
+            Loading...
+        </Spinner>
+      )
+    }
+    if (!token){
+      return <LoginPage errorMessages="You need login to do that"/>
     }
     return children;
   }
@@ -29,17 +38,29 @@ function App() {
   // Middleware check if user is logged
   // User cant access this page (login, register)
   const CheckIsAlreadyLogin = function ({children}){
-    const {token} = useSelector(loginUser$);
-    if (token){
+    if (token && isVerify){
       return <Navigate to="/"/>;
     }
     return children;
   }
+
+  function CheckUserIsPostAuthor({children}){
+    const {slug} = useParams()
+    if (user && user.posts.indexOf(slug) !== -1){
+      return children
+    }else{
+      return <NotFound></NotFound>
+    }
+  }
   useEffect(()=>{
     async function callAPI(){
-      const res = await api.verifyToken();
-      console.log(res.data)
-      dispatch(verifyToken(res.data)); 
+      try {
+        const res = await api.verifyToken();
+        console.log(res.data)
+        dispatch(verifyToken(res.data)); 
+      } catch (error) {
+        console.log(error);
+      }
     }
     callAPI();
     
@@ -51,12 +72,16 @@ function App() {
           <>
             <Header/>
             <Routes>
+              
               <Route path="/register" exact element={<CheckIsAlreadyLogin> <RegisterPage/> </CheckIsAlreadyLogin>} />
               <Route path="/login" exact element={<CheckIsAlreadyLogin> <LoginPage/> </CheckIsAlreadyLogin>} />
               
-              <Route path="/create-post" exact element={<CheckLogin> <CreatePost/> </CheckLogin>} />
-              <Route path="/post/:slug" exact element={<CheckLogin> <PostDetail/> </CheckLogin>} />
-              <Route path="/" exact element={<CheckLogin> <HomePage/> </CheckLogin> }/>
+              <Route path="/create-post" exact element={<CheckLogin> <CreatePostPage/> </CheckLogin>} />
+              <Route path="/post/:slug" exact element={<PostDetail/>} />
+              <Route path="/post/:slug/edit" exact element={<CheckLogin> <CheckUserIsPostAuthor> <EditPostPage/></CheckUserIsPostAuthor> </CheckLogin> }/>
+
+              <Route path="/" exact element={<CheckLogin> <HomePage/> </CheckLogin>}/>
+              <Route path="*" exact element={<NotFound/>}/>
             </Routes>
             <Footer/>
           </>

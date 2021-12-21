@@ -6,15 +6,19 @@
   background-color: #fff;
   top: 0;
   // left: 0;
-  // z-index: 2000;
+  z-index: 2000;
   // width: 100%;
   &__logo {
     font-size: 28px;
     font-weight: 500;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    margin-right: 16px;
   }
   &__search {
     height: 38px;
     width: 300px;
+    margin-right: 16px;
   }
 }
 

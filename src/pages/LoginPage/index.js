@@ -1,8 +1,8 @@
 import Login from "../../components/Login";
 import SocialMedia from "../../components/SocialMedia";
-function LoginPage(){
+function LoginPage({errorMessages}){
     return (
-        <SocialMedia form={Login}></SocialMedia>
+        <SocialMedia errorMessages={errorMessages} form={Login}></SocialMedia>
     )
 }
 

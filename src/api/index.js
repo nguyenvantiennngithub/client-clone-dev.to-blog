@@ -9,10 +9,12 @@ const checkLogin = (payload)=> axios.post(`${URL}/auth/login`, payload)
 const verifyToken = () => axios.get(`${URL}/auth/verify-token`, {headers});
 const uploadImageBlog = (url) => axios.post(`${URL}/post/upload-image`, url, {headers})
 const createPost = (data) => axios.post(`${URL}/post/create-post`, data, {headers})//{content: {html, text}, cover, title, tags}
-const getPost = (data) => axios.get(`${URL}/post/${data}`, {headers})
-const heartPost = (data) => axios.post(`${URL}/post/${data.slug}/heart`, {isHeart: data.isHeart}, {headers})
-const bookmark = (data) => axios.post(`${URL}/post/${data.slug}/bookmark`, {isBookmark: data.isBookmark}, {headers})
-const followUser = (data) => axios.post(`${URL}/user/${data.author}/follow`, {isFollowing: data.isFollowing}, {headers})
+const getPost = (data) => axios.get(`${URL}/post/${data}`)
+const heartPost = (data) => axios.post(`${URL}/post/${data.slug}/heart`, {isPush: data.isPush}, {headers})
+const bookmark = (data) => axios.post(`${URL}/post/${data.slug}/bookmark`, {isPush: data.isPush}, {headers})
+const followUser = (data) => axios.post(`${URL}/user/${data.author}/follow`, {isPush: data.isPush}, {headers})
+const getPosts = () => axios.get(`${URL}/post/all`, {headers})
+const editPost = (data) => axios.post(`${URL}/post/${data.slug}/edit`, data, {headers})
 export {
     registerUser, checkLogin, verifyToken, uploadImageBlog, 
-    createPost, getPost, heartPost, bookmark, followUser}
+    createPost, getPost, heartPost, bookmark, followUser, getPosts, editPost}

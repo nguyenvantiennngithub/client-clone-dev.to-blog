@@ -1,26 +1,47 @@
 import MdEditor from 'react-markdown-editor-lite';
 import MarkdownIt from 'markdown-it';
-import {Alert, Button, Container } from 'reactstrap'
+import {Alert, Button, Container, Spinner } from 'reactstrap'
 import { Formik } from 'formik';
-import {useRef} from 'react'
-import {useDispatch} from 'react-redux'
+import {useRef, useState} from 'react'
 import * as yup from 'yup';
-import {uploadImageBlog} from '../../api/'
-import {createPost} from '../../redux/actions/'
-import { useNavigate } from 'react-router-dom';
+import {uploadImageBlog} from '../../api'
 import './CreatePost.scss';
 import 'react-markdown-editor-lite/lib/index.css';
+import {useParams} from 'react-router-dom'
+import { useSelector } from 'react-redux';
 const mdParser = new MarkdownIt();
-function CreatePost(){
-    const dispatch = useDispatch();
-    let navigate = useNavigate();
+
+function CreatePost({initialValues, onSubmit, isCreate, isLoading, isError}){
+    const tagEle = useRef('');//old value of tags input
+    const params = useParams();
+    const [isUploading, setIsUploading] = useState(false);
+    console.log("params", params)
+
+
+
+    let validationSchema = yup.object().shape({
+        title: yup.string().required(), //string required
+        tags: yup.string().test('tags is valid', '${path}: ${value} contains non-alphanumeric characters', (value)=>{
+            var regex = /[^a-z A-Z 0-9 ,]+/g//check just number and letter
+            return !regex.test(value);
+        }).test('length of tags less than 4', 'tags: Max number of tag is 4', (values)=>{//check max length of tags is 4
+            if (!values) return true;
+            return values.split(',').filter(item => item.replace(/ /g, '') !== '').length <= 4
+        }),
+        html: yup.string(),
+    });
+
+
+
     function uploadFile(file){
         return new Promise((resolve) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = async function(data){
-                const res = await uploadImageBlog({image: data.target.result, name: file.name})
+            reader.onload = async function(e){
+                setIsUploading(true);
+                const res = await uploadImageBlog({image: e.target.result, name: file.name})
                 resolve(res.data.url);
+                setIsUploading(false);
             };
         });
     }
@@ -51,7 +72,6 @@ function CreatePost(){
     }
 
 
-    const tagEle = useRef('');//old value of tags input
     function handleValidateTagsInput (ele){
         console.log(ele.nativeEvent.data)
         const input = ele.nativeEvent.data;//char input
@@ -84,65 +104,53 @@ function CreatePost(){
             <Alert color="danger">
                 <h5>Whoops, something went wrong:</h5>
                 {array.map(item => <p key={item}>{item}</p>)}
-            </Alert>)
+            </Alert>
+        )
     }
 
-
-    let validationSchema = yup.object().shape({
-        title: yup.string().required(), //string required
-        tags: yup.string().test('tags is valid', '${path}: ${value} contains non-alphanumeric characters', (value)=>{
-            var regex = /[^a-z A-Z 0-9 ,]+/g//check just number and letter
-            return !regex.test(value);
-        }).test('length of tags less than 4', 'tags: Max number of tag is 4', (values)=>{//check max length of tags is 4
-            if (!values) return true;
-            return values.split(',').filter(item => item.replace(/ /g, '') !== '').length <= 4
-        }),
-        html: yup.string(),
-    });
-
-    function submit(values){
-        //convert tags from string to array
-        var tags = values.tags.split(',').map(item => item.replace(/ /g, '')).filter(item => item !== '');
-        const data = {
-            content: values.content, 
-            cover: values.cover.src, 
-            title: values.title,
-            tags: tags, 
-        }
-        dispatch(createPost.createPostRequest({data, navigate: (url)=>navigate(url)}));
-    }
-    const initialValues = { title: '', tags: '', content: {html: '', text: ''},  cover: {src: '', alt: ''} }
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={submit}
+            onSubmit={onSubmit}
             validationSchema={validationSchema}>
             {({
                 handleChange, handleSubmit, setFieldValue, resetForm,
                 errors, touched, values
             }) => (
                 <form onSubmit={handleSubmit}>
+                                    
+               
                     <Container>
                         <div className="createPost">
                             {handleInputInValid(errors, touched)}
 
                             <div className='createPost__header'>
-                                {values.cover.src && 
-                                    <>
+                                {isUploading &&  <Spinner color="danger" size="sm" style={{'marginRight': '16px'}}>Loading...</Spinner>}
+                                {isError && <Alert color='danger'>There are some problems</Alert>}
+                                    {values.cover.src ? 
+                                    <div>
                                         <img
                                             className='createPost__header-img'
                                             src={values.cover.src}
                                             alt={values.cover.alt}
                                         />    
                                         <Button className='createPost__header-remove' color="danger" outline onClick={()=>handleRemoveCover(setFieldValue)}>Remove</Button>
-                                    </>
-                                }
-                                <input 
-                                    className='createPost__header-file' 
-                                    accept='image/*' type='file' 
-                                    onChange={(e)=>{
-                                        handleUploadCoverImage(e, setFieldValue)
+                                        <input 
+                                            className='createPost__header-file loaded' 
+                                            accept='image/*' type='file' 
+                                            onChange={(e)=>{
+                                                handleUploadCoverImage(e, setFieldValue)
+                                        }}/>
+                                    </div>
+                                    :
+                                    <input 
+                                        className='createPost__header-file' 
+                                        accept='image/*' type='file' 
+                                        onChange={(e)=>{
+                                            handleUploadCoverImage(e, setFieldValue)
                                     }}/>
+                                }
+                                
                             </div>
                             <div className="createPost__header">
                                 <div className='createPost__header-container'>
@@ -154,7 +162,10 @@ function CreatePost(){
                                         type="text"
                                         name="title"
                                         className="createPost__header-textarea title" 
-                                        placeholder='Title...'>
+                                        placeholder='Title...'
+                                        defaultValue={values.title}
+                                    >
+                                        
                                     </textarea>
                                 </div>
                                 <div className='createPost__header-container'>
@@ -167,7 +178,9 @@ function CreatePost(){
                                         type="text" 
                                         name="tags"
                                         className="createPost__header-textarea tags" 
-                                        placeholder='Add up 4 tags...'>
+                                        placeholder='Add up 4 tags...'
+                                        defaultValue={values.tags}
+                                    >
                                     </textarea>
                                 </div>
                             </div>
@@ -180,10 +193,16 @@ function CreatePost(){
                                 }}
                                 value={values.content.text}
                                 onImageUpload={handleUploadImage}
+                                defaultValue={values.content.text}
                             />
                             <div className='createPost__footer'>
-                                <Button color="primary" type="submit">Create Post</Button>
-                                <Button color="danger" onClick={resetForm} type="reset">Reset all content</Button>
+                                <Button color="primary" type="submit">
+                                    {isCreate ? 'Create Post' : 'Edit Post'}
+                                    {isLoading && <Spinner color="danger" size="sm" style={{'marginLeft': '16px'}}>Loading...</Spinner>}
+                                </Button>
+                                <Button color="danger" onClick={resetForm} type="reset">
+                                    {isCreate ? 'Reset all content' : 'Revert new changes'}
+                                </Button>
                             </div>
 
                         </div>

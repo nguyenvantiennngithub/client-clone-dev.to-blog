@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {signOut} from '../../../../redux/actions/'
@@ -6,7 +6,7 @@ import './Avatar.scss'
 
 const avatar = 'https://res.cloudinary.com/vantiennn/image/upload/v1627620249/uploads/51c4a2b8c5ffcee620d89240991c5910.jpg'
 function Avatar(){
-
+    const navigate = useNavigate()
     var [isShowDropDown, setIsShowDropDown] = useState(false);
     const dispatch = useDispatch();
 
@@ -16,6 +16,7 @@ function Avatar(){
 
     const handleSignOut = function(){
         dispatch(signOut());
+        navigate('/login')
     }
     return (
         <div>

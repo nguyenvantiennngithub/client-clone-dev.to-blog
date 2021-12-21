@@ -6,7 +6,7 @@ function Login(){
     return (
         <Nav>
             <NavItem>
-                <Link to="/login">
+                <Link to="/login" style={{marginRight: '16px'}}>
                     <Button className="fw500" outline>Log in</Button>
                 </Link>
             </NavItem>

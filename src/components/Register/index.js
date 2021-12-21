@@ -1,6 +1,6 @@
 
 import { Formik, Form, FastField } from 'formik';
-import { Alert, Button } from 'reactstrap';
+import { Alert, Button, Spinner } from 'reactstrap';
 import InputField from '../Field/InputField';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux'
@@ -16,13 +16,12 @@ function Register (){
         password: yup.string().required(),
       });
 
-    const message = useSelector(registerUser$);
+    const {message, isError, isLoading} = useSelector(registerUser$);
     console.log('components/register', message)
     const dispatch = useDispatch();
     
     return (
         <div>
-            {message && <Alert color="danger">{message}</Alert>}
             <Formik
                 initialValues={{ email: '', password: '', username: '' }}
                 validationSchema={validationSchema}
@@ -32,7 +31,14 @@ function Register (){
             >
             {({ isSubmitting }) => (
                 <Form>
-                    <h3 className="register__header">Create your account</h3>
+                    <h3 className="register__header">
+                        Create your account
+                        
+                        
+                    </h3>
+                    {isError && <Alert color="danger">There are some problems</Alert>}
+                    {message && <Alert color="danger">{message}</Alert>}
+
                     <FastField
                         name="username"
                         component={InputField}
@@ -52,7 +58,10 @@ function Register (){
                         placeholder="Enter your password"
                         type="password"
                     />
-                    <Button className="register__btnSubmit" block color="primary" type="submit">Create account</Button>
+                    <Button className="register__btnSubmit" block color="primary" type="submit">
+                        Create account
+                        {isLoading && <Spinner color="danger" size="sm" style={{'marginLeft': '16px'}}>Loading...</Spinner>}
+                    </Button>
                 </Form>
             )}
             </Formik>

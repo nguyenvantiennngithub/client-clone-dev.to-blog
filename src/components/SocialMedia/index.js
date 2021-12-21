@@ -3,6 +3,7 @@ import {Button} from 'reactstrap'
 import {BsFacebook, BsGoogle} from 'react-icons/bs'
 function SocialMedia(props){
     const Form = props.form
+    const {errorMessages} = props
     return (
         <div className="socialMedia">
             <div className="socialMedia-layout">
@@ -18,7 +19,7 @@ function SocialMedia(props){
                     </Button>
                     <hr/>
                     <div>
-                        <Form></Form>
+                        <Form errorMessages={errorMessages}></Form>
                     </div>
                 </div>
             </div>

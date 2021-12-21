@@ -1,5 +1,5 @@
 import INIT_STATE from '../constants'
-import {getType, getPost, heartPost, bookmark} from '../actions'
+import {getType, getPost, heartPost, bookmark, clearPostAuthor, editPost} from '../actions'
 
 
 function getPostReducers(state = INIT_STATE.getPost, action){
@@ -19,6 +19,7 @@ function getPostReducers(state = INIT_STATE.getPost, action){
                 data: action.payload,
                 isLoading: false,
                 isLoaded: true,
+                isError: false,
             }
         }
 
@@ -26,6 +27,8 @@ function getPostReducers(state = INIT_STATE.getPost, action){
             return{
                 ...state,
                 isLoading: false,
+                isError: true,
+                isLoaded: true,
             }
         }
 
@@ -64,6 +67,50 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         case getType(bookmark.bookmarkFailure):{
             return{
                 ...state,
+            }
+        }
+
+        
+
+        case getType(clearPostAuthor):{
+            console.log("CLEAR POST AUTHOR")
+            return {
+                ...state,
+                data: {
+                    author: {},
+                    post: {},
+                },
+                isLoaded: false,
+                
+            }
+        }
+
+        case getType(editPost.editPostRequest):{
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
+
+        case getType(editPost.editPostSuccess):{
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    post: action.payload,
+                    isLoading: false,
+                    isError: false,
+                    isLoaded: true,
+                },
+            }
+        }
+
+        case getType(editPost.editPostFailure):{
+            return{
+                ...state,
+                isLoading: false,
+                isError: true,
+                isLoaded: true,
             }
         }
 

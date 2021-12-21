@@ -34,6 +34,11 @@ textarea {
         font-size: 10pt;
         color: #333;
       }
+      &.loaded {
+        &::before {
+          content: "Change cover image";
+        }
+      }
       &::-webkit-file-upload-button {
         visibility: hidden;
       }
