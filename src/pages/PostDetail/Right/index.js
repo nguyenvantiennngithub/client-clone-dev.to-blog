@@ -2,6 +2,7 @@ import { Button } from "reactstrap"
 import { following } from "../../../redux/actions";
 import useToggle from '../../../hooks/useToggle'
 import { typeUpdateFollow } from "../../../redux/constants";
+import { Link } from "react-router-dom";
 function Right({author, isLoggedIn, user}){
 
     const username = user && user.username;
@@ -23,7 +24,7 @@ function Right({author, isLoggedIn, user}){
                 </div>
             </div>
             {
-                (author.username === username) ? <Button  className="postDetail__right-follow" color="primary" block>Edit profile</Button>
+                (author.username === username) ? <Link to={'/user/' + author.username}><Button  className="postDetail__right-follow" color="primary" block>Edit profile</Button></Link>
                     :        
                     (isFollowing) ? <Button  className="postDetail__right-follow" onClick={handleToggleFollowing} color="secondary" block>Following</Button>
                         :
