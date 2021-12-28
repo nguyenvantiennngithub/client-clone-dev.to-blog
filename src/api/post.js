@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const URL = 'http://localhost:8080'
+const URL = 'https://server-blog-vantiennn.herokuapp.com'
 
 
 const getPosts = () => axios.get(`${URL}/post/all`, {headers: {Authorization: localStorage.getItem('token')}})

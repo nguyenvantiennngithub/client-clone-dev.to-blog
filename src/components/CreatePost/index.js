@@ -20,7 +20,7 @@ function CreatePost({initialValues, onSubmit, isCreate, isLoading, isError}){
 
     let validationSchema = yup.object().shape({
         title: yup.string().required(), //string required
-        tags: yup.string().test('tags is valid', '${path}: ${value} contains non-alphanumeric characters', (value)=>{
+        tags: yup.string().test('tags is valid', 'contains non-alphanumeric characters', (value)=>{
             var regex = /[^a-z A-Z 0-9 ,]+/g//check just number and letter
             return !regex.test(value);
         }).test('length of tags less than 4', 'tags: Max number of tag is 4', (values)=>{//check max length of tags is 4

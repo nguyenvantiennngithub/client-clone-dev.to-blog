@@ -59,7 +59,7 @@ function Post({data, typeUpdateReaction}){
                             (isHeart) ? <BsFillSuitHeartFill className="post__footer-left-item-icon heart"/>
                                 :<BsSuitHeart className="post__footer-left-item-icon" onClick={handleToggleHeart}/>
                         }
-                        {post.heart.length + ' hearts'}
+                        {post.heart.length + ' Hearts'}
                     </div>
                     <div className="post__footer-left-item">
                         <FaRegComment className="post__footer-left-item-icon rotate90"/>
@@ -74,7 +74,7 @@ function Post({data, typeUpdateReaction}){
                         (isBookmark) ? <BsBookmarkFill className="post__footer-left-item-icon bookmark"/>
                             :<BsBookmark className="post__footer-left-item-icon"/>
                     }
-                    {post.bookmark.length + ' Bookmark'} 
+                    {post.bookmark.length + ' Bookmarks'} 
                     </div>
                 </div>
             </div>
