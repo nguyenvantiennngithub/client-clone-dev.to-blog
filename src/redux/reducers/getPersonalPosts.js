@@ -1,28 +1,30 @@
 import INIT_STATE from '../constants'
-import {getType, getPosts, updatePostOfPosts, clearPosts} from '../actions'
+import {getType, getPersonalPosts, deletePost} from '../actions'
 
 
-function getPostsReducers(state = INIT_STATE.getPosts, action){
+function getPostsReducers(state = INIT_STATE.getPersonalPosts, action){
     // console.log('reducers/getPosts', action)
     switch(action.type){
-        case getType(getPosts.getPostsRequest):{
+        case getType(getPersonalPosts.getPersonalPostsRequest):{
             return {
                 ...state,
                 isLoading: true,
             }
         }
 
-        case getType(getPosts.getPostsSuccess):{
+        case getType(getPersonalPosts.getPersonalPostsSuccess):{
             return {
                 ...state,
                 isLoading: false,
                 isLoaded: true,
                 isError: false,
-                data: action.payload
+                posts: action.payload.posts,
+                followers: action.payload.followers,
+                following: action.payload.following,
             }
         }
 
-        case getType(getPosts.getPostsFailure):{
+        case getType(getPersonalPosts.getPersonalPostsFailure):{
             return{
                 ...state,
                 isError: true,
@@ -31,32 +33,23 @@ function getPostsReducers(state = INIT_STATE.getPosts, action){
             }
         }
 
-        case getType(clearPosts):{
-            return {
-                data: [],
-                isError: false,
-                isLoaded: false,
-                isLoading: false,
-            }
-        }
-
-
-        case getType(updatePostOfPosts.updatePostOfPostsRequest):{
+        case getType(deletePost.deletePostRequest):{
             return {
                 ...state,
             }
         }   
 
-        case getType(updatePostOfPosts.updatePostOfPostsSuccess):{
+        case getType(deletePost.deletePostSuccess):{
+            console.log(state)
             return {
                 ...state,
-                data: state.data.map(item => {
-                    return item.post.slug === action.payload.post.slug ? action.payload : item; 
+                data: state.data.filter(item => {
+                    return item.slug !== action.payload;
                 })
             }
         }
 
-        case getType(updatePostOfPosts.updatePostOfPostsFailure):{
+        case getType(deletePost.deletePostFailure):{
             return{
                 ...state,
             }

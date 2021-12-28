@@ -14,6 +14,8 @@ import { Spinner } from "reactstrap";
 import CreatePostPage from "./pages/CreatePostPage";
 import EditPostPage from "./pages/EditPostPage";
 import NotFound from "./pages/NotFound";
+import ProfilePage from "./pages/ProfilePage";
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {  
   const dispatch = useDispatch();
@@ -28,11 +30,11 @@ function App() {
             Loading...
         </Spinner>
       )
-    }
-    if (!token){
+    }else if (!token){
       return <LoginPage errorMessages="You need login to do that"/>
+    }else{
+      return children;
     }
-    return children;
   }
 
   // Middleware check if user is logged
@@ -60,6 +62,9 @@ function App() {
         dispatch(verifyToken(res.data)); 
       } catch (error) {
         console.log(error);
+        dispatch(verifyToken({token: false, user: null})); 
+        
+        <Navigate to="/"></Navigate>
       }
     }
     callAPI();
@@ -76,9 +81,12 @@ function App() {
               <Route path="/register" exact element={<CheckIsAlreadyLogin> <RegisterPage/> </CheckIsAlreadyLogin>} />
               <Route path="/login" exact element={<CheckIsAlreadyLogin> <LoginPage/> </CheckIsAlreadyLogin>} />
               
+              <Route path="/dashboard/*" exact element={<CheckLogin> <DashboardPage/> </CheckLogin>} />
               <Route path="/create-post" exact element={<CheckLogin> <CreatePostPage/> </CheckLogin>} />
               <Route path="/post/:slug" exact element={<PostDetail/>} />
               <Route path="/post/:slug/edit" exact element={<CheckLogin> <CheckUserIsPostAuthor> <EditPostPage/></CheckUserIsPostAuthor> </CheckLogin> }/>
+              
+              <Route path="/user/:username" exact element={<ProfilePage/>}/>
 
               <Route path="/" exact element={<CheckLogin> <HomePage/> </CheckLogin>}/>
               <Route path="*" exact element={<NotFound/>}/>

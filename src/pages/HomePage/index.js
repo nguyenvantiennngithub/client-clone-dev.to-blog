@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { Col, Container, Row, Spinner } from "reactstrap"
 import {useDispatch, useSelector} from 'react-redux'
 import {getPosts} from '../../redux/actions/'
+import {typeUpdateReaction} from '../../redux/constants'
 import Post from './Post'
 import './HomePage.scss'
 function HomePage(){
@@ -35,7 +36,7 @@ function HomePage(){
                                 {
                                     data.map((item, index)=>{
                                         console.log(item)
-                                        return <Post key={index} data={item} />
+                                        return <Post key={index} data={item} typeUpdateReaction={typeUpdateReaction.posts}/>
                                     })
                                 }
                             </div>

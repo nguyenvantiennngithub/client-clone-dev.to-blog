@@ -1,11 +1,12 @@
 import { BsBookmark, BsBookmarkFill, BsFillSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { bookmark, heartPost } from "../../../redux/actions";
 import useToggle from '../../../hooks/useToggle'
+import {typeUpdateReaction} from '../../../redux/constants'
 function Left({post, isLoggedIn, user}){
 
     const username = user && user.username;
-    const [isHeart, handleToggleHeart] = useToggle(username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug})
-    const [isBookmark, handleToggleBookmark] = useToggle(username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug});
+    const [isHeart, handleToggleHeart] = useToggle(username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug}, typeUpdateReaction.post)
+    const [isBookmark, handleToggleBookmark] = useToggle(username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug}, typeUpdateReaction.post);
 
     
     return (

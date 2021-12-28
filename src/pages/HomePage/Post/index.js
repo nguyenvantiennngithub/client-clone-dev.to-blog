@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import './Post.scss'
 import { useSelector } from 'react-redux';
 
-function Post({data}){
+function Post({data, typeUpdateReaction}){
     console.log(data)
     const {post, author} = data;
     var {user, isVerify, token} = useSelector((state) =>{
@@ -17,8 +17,8 @@ function Post({data}){
     const isLoggedIn = (isVerify && token);//verify is true and token is true is loggedin
 
 
-    const [isHeart, handleToggleHeart] = useToggle(username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug}, true)
-    const [isBookmark, handleToggleBookmark] = useToggle(username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug}, true);
+    const [isHeart, handleToggleHeart] = useToggle(username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug}, typeUpdateReaction)
+    const [isBookmark, handleToggleBookmark] = useToggle(username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug}, typeUpdateReaction);
 
     return (
         <div className="post">

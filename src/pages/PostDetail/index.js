@@ -22,7 +22,9 @@ function PostDetail(){
 
     useEffect(()=>{
         dispatch(getPost.getPostRequest(slug))
-       
+       return ()=>{
+            dispatch(clearPostAuthor());
+       }
     }, [dispatch, slug])
 
     if (isLoading || !isLoaded) {

@@ -15,9 +15,11 @@ function Header(){
             <Container style={{paddingLeft: '0px', paddingRight: '0px'}}>
                 <Navbar light>
                     <Nav>
-                        <NavItem>
-                            <Link to='/' className='header__logo'>VanTiennn</Link>
-                        </NavItem>
+                        <Link to='/' className='header__logo'>
+                            <NavItem>
+                                VanTiennn
+                            </NavItem>
+                        </Link>
                         <NavItem>
                             <Input className="header__search" placeholder="Search..."></Input>
                         </NavItem>

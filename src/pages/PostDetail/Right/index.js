@@ -1,11 +1,12 @@
 import { Button } from "reactstrap"
 import { following } from "../../../redux/actions";
 import useToggle from '../../../hooks/useToggle'
+import { typeUpdateFollow } from "../../../redux/constants";
 function Right({author, isLoggedIn, user}){
 
     const username = user && user.username;
     const userFollowing = user && user.following;
-    const [isFollowing, handleToggleFollowing] = useToggle(author.username, userFollowing, isLoggedIn, following.followingRequest, {author: author.username})
+    const [isFollowing, handleToggleFollowing] = useToggle(author.username, userFollowing, isLoggedIn, following.followingRequest, {author: author.username}, typeUpdateFollow.post)
 
     return (
         <div className="postDetail__right">

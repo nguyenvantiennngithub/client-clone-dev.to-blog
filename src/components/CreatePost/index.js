@@ -8,7 +8,6 @@ import {uploadImageBlog} from '../../api'
 import './CreatePost.scss';
 import 'react-markdown-editor-lite/lib/index.css';
 import {useParams} from 'react-router-dom'
-import { useSelector } from 'react-redux';
 const mdParser = new MarkdownIt();
 
 function CreatePost({initialValues, onSubmit, isCreate, isLoading, isError}){

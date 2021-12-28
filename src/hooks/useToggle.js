@@ -6,9 +6,9 @@ import { checkItemInList } from "../helpers";
 //there isn't any name for variable of useState 
 //so that i will use heart as a template
 //isUpdatePostInPosts is flag to check for update in postDetail or listPost
-function useToggle(username, list, isLoggedIn, action, secondData, isUpdatePostInPosts){
+const useToggle = (username, list, isLoggedIn, action, secondData, typeUpdateReaction) => {
     const [isHeart, setIsHeart] = useState(false);
-    console.log('use toggle')
+    // console.log('use toggle')
     const dispatch = useDispatch();
     
     useEffect(()=>{//handle for heart
@@ -20,7 +20,7 @@ function useToggle(username, list, isLoggedIn, action, secondData, isUpdatePostI
             alert('you need login to do that')
             return;
         }
-        dispatch(action({isPush: !isHeart, ...secondData, isUpdatePostInPosts: isUpdatePostInPosts}))
+        dispatch(action({isPush: !isHeart, ...secondData, typeUpdateReaction: typeUpdateReaction}))
     }
 
     return [isHeart, handleToggleHeart]
