@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Spinner } from "reactstrap";
 import CreatePost from "../../components/CreatePost";
+import LoadingError from "../../components/LoadingError";
 import { clearPostAuthor, editPost, getPost } from "../../redux/actions";
 
 
@@ -20,14 +20,8 @@ function EditPostPage(){
 
 
     const {data, isLoading, isLoaded, isError} = useSelector(state => state.getPost)
-    console.log(isLoading, !isLoaded)
-    if (isLoading || !isLoaded) {
-        return (
-            <Spinner>
-                Loading...
-            </Spinner>
-        )
-    }
+    console.log(data)
+
     const {post} = data;
     const initialValues = { 
         title: post.title, 
@@ -51,16 +45,15 @@ function EditPostPage(){
         dispatch(editPost.editPostRequest({data, navigate: (url)=>navigate(url)}));
     }
 
-    
-
     return (
-        <CreatePost 
-            initialValues={initialValues} 
-            onSubmit={submit} 
-            isCreate={false}
-            isLoading={isLoading}
-            isError={isError}
-        />
+        <LoadingError data={{isLoading, isLoaded, isError}}>
+            <CreatePost 
+                initialValues={initialValues} 
+                onSubmit={submit} 
+                isCreate={false}
+                isLoading={isLoading}
+            />
+        </LoadingError>
     )
 }
 

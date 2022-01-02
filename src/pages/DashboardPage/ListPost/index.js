@@ -1,26 +1,35 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Spinner } from "reactstrap";
 import Post from "./Post";
 
 
 function ListPost(){
 
+    var {posts} = useSelector(state => state.getPersonalPosts)
+    
+    var [order, setOrder] = useState(posts);
+
     function handleOnChangeSelect(e){
-        // const type = e.target.value;
+        const type = e.target.value;
+        console.log(type);
+        setOrder([...sortByQuery(posts, type)]);
     }
 
-    const {posts, isLoading, isLoaded, isError} = useSelector(state => state.getPersonalPosts)
-
-
-    if (isLoading || !isLoaded){
-        return (
-            <Spinner>
-                Loading...
-            </Spinner>
-        )
-    }else if (isError){
-        return <p>There are some problems</p>
+    function sortByQuery(array, sort){
+        console.log(sort)
+        if (sort === 'created-desc'){
+            return array.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }else if (sort === 'updated-desc'){
+            return array.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        }else if (sort === 'heart-desc'){
+            return array.sort((a, b) => b.heart.length - a.heart.length);
+        }else if (sort === 'bookmark-desc'){
+            return array.sort((a, b) => b.bookmark.length - a.bookmark.length);
+        }else{
+            return array;
+        }
     }
+    
     return (
         <div className="dashboard__content">
             <div className="dashboard__content-header">
@@ -33,7 +42,7 @@ function ListPost(){
                 </select>
             </div>
             <div className="dashboard__posts">
-                {posts.map(item=> <Post key={item.slug} data={item}></Post>)}
+                {order.map(item=> <Post key={item.slug} data={item}></Post>)}
             </div>
         </div>
     )

@@ -1,8 +1,9 @@
 import { useEffect } from "react"
-import { Col, Container, Row, Spinner } from "reactstrap"
+import { Col, Container, Row } from "reactstrap"
 import {useDispatch, useSelector} from 'react-redux'
 import {getPosts} from '../../redux/actions/'
 import {typeUpdateReaction} from '../../redux/constants'
+import LoadingError from '../../components/LoadingError/'
 import Post from './Post'
 import './HomePage.scss'
 function HomePage(){
@@ -18,16 +19,9 @@ function HomePage(){
         dispatch(getPosts.getPostsRequest());
     }, [dispatch])
     
-    if (isLoading || !isLoaded){
-        return (
-            <Spinner>
-                Loading...
-            </Spinner>
-        )
-    }else if (isError){
-        return <p>There are some problems</p>
-    }else{
-        return (
+
+    return (
+        <LoadingError data={{isLoading, isLoaded, isError}}>
             <div className="home">
                 <Container>
                     <Row>
@@ -50,8 +44,9 @@ function HomePage(){
                     </Row>
                 </Container>
             </div>
-        )
-    }
+        </LoadingError>
+    )
+    
 }
 
 export default HomePage

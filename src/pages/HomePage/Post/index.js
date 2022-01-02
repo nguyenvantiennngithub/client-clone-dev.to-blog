@@ -4,8 +4,8 @@ import useToggle from '../../../hooks/useToggle'
 import { BsFillSuitHeartFill, BsSuitHeart, BsBookmark, BsBookmarkFill} from 'react-icons/bs';
 import {FaRegComment} from 'react-icons/fa'
 import { Link } from 'react-router-dom';
-import './Post.scss'
 import { useSelector } from 'react-redux';
+import './Post.scss'
 
 function Post({data, typeUpdateReaction}){
     console.log(data)

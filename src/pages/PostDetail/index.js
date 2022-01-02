@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
 import {clearPostAuthor, getPost} from '../../redux/actions'
-import {Col, Container, Row, Spinner} from 'reactstrap'
+import {Col, Container, Row} from 'reactstrap'
 import './PostDetail.scss'
 import Left from "./Left";
 import Mid from "./Mid";
 import Right from "./Right";
+import LoadingError from "../../components/LoadingError";
 function PostDetail(){
     const {slug} = useParams();
     const dispatch = useDispatch();
@@ -27,35 +28,29 @@ function PostDetail(){
        }
     }, [dispatch, slug])
 
-    if (isLoading || !isLoaded) {
-        return (
-            <Spinner>
-                Loading...
-            </Spinner>
-        )
-    }else if (isError){
-        return <p>There are some proplems</p>
-    }else{
-        return (
+
+    
+    return (
+        <LoadingError data={{isLoading, isLoaded, isError}}>
             <div className="postDetail">
                 <Container>
                     <Row>
                         <Col xs="1">
                             <Left post={post} isLoggedIn={isLoggedIn} user={user}/>
                         </Col>
-    
+
                         <Col xs="8">
                             <Mid post={post} author={author}/>
                         </Col>
-    
+
                         <Col xs="3" className="postDetail__right-fixed">
                             <Right author={author} isLoggedIn={isLoggedIn} user={user}/>
                         </Col>
                     </Row>
                 </Container>
             </div>
-        )
-    }
+        </LoadingError>
+    )
     
 }
 

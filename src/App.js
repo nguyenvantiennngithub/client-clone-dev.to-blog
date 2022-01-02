@@ -10,31 +10,26 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";  
 import { useEffect } from "react";
 import PostDetail from "./pages/PostDetail";
-import { Spinner } from "reactstrap";
 import CreatePostPage from "./pages/CreatePostPage";
 import EditPostPage from "./pages/EditPostPage";
 import NotFound from "./pages/NotFound";
 import ProfilePage from "./pages/ProfilePage";
 import DashboardPage from "./pages/DashboardPage";
+import LoadingError from "./components/LoadingError";
+import SettingPage from "./pages/SettingPage";
 
 function App() {  
   const dispatch = useDispatch();
-  const {token, isVerify, user} = useSelector(loginUser$);
+  const {token, isError, isVerify, isLoading, user} = useSelector(loginUser$);
   
   //Middleware check if user dont logged 
   //will redirect to login
   const CheckLogin = function ({children}){
-    if (!isVerify){
-      return (
-        <Spinner>
-            Loading...
-        </Spinner>
-      )
-    }else if (!token){
-      return <LoginPage errorMessages="You need login to do that"/>
-    }else{
-      return children;
-    }
+    return (
+      <LoadingError data={{isLoading, isLoaded: isVerify, isError: isError}}>
+        { (!token) ? <LoginPage/> : children }
+      </LoadingError>
+    )
   }
 
   // Middleware check if user is logged
@@ -81,6 +76,8 @@ function App() {
               <Route path="/register" exact element={<CheckIsAlreadyLogin> <RegisterPage/> </CheckIsAlreadyLogin>} />
               <Route path="/login" exact element={<CheckIsAlreadyLogin> <LoginPage/> </CheckIsAlreadyLogin>} />
               
+
+              <Route path="/settings/*" exact element={<CheckLogin> <SettingPage/> </CheckLogin>} />
               <Route path="/dashboard/*" exact element={<CheckLogin> <DashboardPage/> </CheckLogin>} />
               <Route path="/create-post" exact element={<CheckLogin> <CreatePostPage/> </CheckLogin>} />
               <Route path="/post/:slug" exact element={<PostDetail/>} />

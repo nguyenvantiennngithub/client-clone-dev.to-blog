@@ -10,6 +10,7 @@ const INIT_STATE = {
         isLoading: false,
         user: {},
         isError: false,
+        message: '',
     },
     createPost:{
         isLoading: false,
@@ -24,7 +25,7 @@ const INIT_STATE = {
     getPost:{
         data: {
             author: {},
-            post: {},
+            post: {content: {}},
         },
         isLoading: false,
         isLoaded: false,

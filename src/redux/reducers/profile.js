@@ -63,8 +63,6 @@ function profileReducers(state = INIT_STATE.profile, action){
             }
         }
         
-
-        
         default:{
             return state
         }

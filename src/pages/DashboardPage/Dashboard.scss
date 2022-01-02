@@ -15,6 +15,9 @@
       border-radius: 8px;
       cursor: pointer;
       margin: 8px 0;
+      &:hover {
+        background-color: #dddeee;
+      }
 
       &-link {
         text-decoration: none;

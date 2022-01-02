@@ -46,9 +46,35 @@ function* loginUser(action){
     }
 }
 
+function* updateInfoUser(action){
+    try {
+        //{message, success}
+        const res = yield call(api.updateInfoUser, action.payload);
+        console.log("updateInfoUser", res.data)  
+        yield put(actions.updateInfoUser.updateInfoUserSuccess({data: res.data, message: 'Your profile has been updated'}));
+    } catch (error) {
+        yield put(actions.updateInfoUser.updateInfoUserFailure(error))
+    }
+}
+
+function* changePassword(action){
+    try {
+        //{message, success}
+        const res = yield call(api.changePassword, action.payload);
+        console.log("changePassword", res.data)  
+        yield put(actions.changePassword.changePasswordSuccess({message: res.data.message}));
+    } catch (error) {
+        yield put(actions.changePassword.changePasswordFailure(error))
+    }
+}
+
 function* auth(){
     yield takeLatest(actions.registerUser.registerUserRequest, registerUser);
     yield takeLatest(actions.loginUser.loginUserRequest, loginUser);   
+    yield takeLatest(actions.updateInfoUser.updateInfoUserRequest, updateInfoUser);   
+    yield takeLatest(actions.changePassword.changePasswordRequest, changePassword);   
 }
 
 export default auth
+
+

@@ -1,5 +1,5 @@
 import INIT_STATE from '../constants'
-import {getType, loginUser, verifyToken, signOut, following} from '../actions'
+import {getType, loginUser, verifyToken, signOut, following, pushNewPost, updateInfoUser, resetMessage, changePassword} from '../actions'
 function loginUserReducers(state = INIT_STATE.loginUser, action){
     // console.log('reducers/loginUser', action)
     switch(action.type){
@@ -7,6 +7,7 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
             return {
                 ...state,
                 isLoading: true,
+                message: '',
             }
         }
 
@@ -15,10 +16,11 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
             return {
                 ...state,
                 isLoading: false,
-                error: false,
+                isError: false,
                 token: action.payload.success,
                 user: action.payload.user,
-                message: action.payload.message
+                message: action.payload.message,
+                isVerify: true,
 
             }
         }
@@ -29,7 +31,8 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
                 isLoading: false,
                 token: undefined,
                 message: '',
-                error: true,
+                isVerify: true,
+                isError: true,
             }
         }
         case getType(verifyToken):{
@@ -69,6 +72,64 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
                 ...state,
             }
         }
+
+        case getType(pushNewPost):{
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    posts: [...state.user.posts, action.payload]
+                }
+            }
+        }
+
+
+        case getType(updateInfoUser.updateInfoUserRequest):{
+            return {
+                ...state,
+            }
+        }
+
+        case getType(updateInfoUser.updateInfoUserSuccess):{
+            return {
+                ...state,
+                user: action.payload.data,
+                message: action.payload.message,
+            }
+        }
+
+        case getType(updateInfoUser.updateInfoUserFailure):{
+            return{
+                ...state,
+            }
+        }
+
+        case getType(changePassword.changePasswordRequest):{
+            return {
+                ...state,
+            }
+        }
+
+        case getType(changePassword.changePasswordSuccess):{
+            return {
+                ...state,
+                message: action.payload.message,
+            }
+        }
+
+        case getType(changePassword.changePasswordFailure):{
+            return{
+                ...state,
+            }
+        }
+
+        case getType(resetMessage):{
+            return {
+                ...state,
+                message: '',
+            }
+        }
+
         default:{
             return state
         }

@@ -10,7 +10,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import {useParams} from 'react-router-dom'
 const mdParser = new MarkdownIt();
 
-function CreatePost({initialValues, onSubmit, isCreate, isLoading, isError}){
+function CreatePost({initialValues, onSubmit, isCreate, isLoading}){
     const tagEle = useRef('');//old value of tags input
     const params = useParams();
     const [isUploading, setIsUploading] = useState(false);
@@ -125,7 +125,6 @@ function CreatePost({initialValues, onSubmit, isCreate, isLoading, isError}){
 
                             <div className='createPost__header'>
                                 {isUploading &&  <Spinner color="danger" size="sm" style={{'marginRight': '16px'}}>Loading...</Spinner>}
-                                {isError && <Alert color='danger'>There are some problems</Alert>}
                                     {values.cover.src ? 
                                     <div>
                                         <img
@@ -203,7 +202,6 @@ function CreatePost({initialValues, onSubmit, isCreate, isLoading, isError}){
                                     {isCreate ? 'Reset all content' : 'Revert new changes'}
                                 </Button>
                             </div>
-
                         </div>
                     </Container>
                 </form>

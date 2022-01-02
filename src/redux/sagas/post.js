@@ -10,6 +10,7 @@ function* createPost(action){
         //{message, success}
         const res = yield call(api.createPost, action.payload.data);//data: all of post
         yield put(actions.createPost.createPostSuccess())
+        yield put(actions.pushNewPost(res.data.slug))
         console.log(res.data);
         if (res.data.slug){
             action.payload.navigate(`/post/${res.data.slug}`);
