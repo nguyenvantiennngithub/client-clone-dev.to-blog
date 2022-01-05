@@ -6,6 +6,7 @@ import getPostReducers from "./getPost";
 import getPostsReducers from "./getPosts";
 import getPersonalPostsReducers from "./getPersonalPosts";
 import profileReducers from "./profile";
+import commentReducers from "./comment";
 
 const createRootReducer = combineReducers({
     getPost: getPostReducers,
@@ -15,5 +16,6 @@ const createRootReducer = combineReducers({
     createPost: createPostReducers,
     getPersonalPosts: getPersonalPostsReducers,
     profile: profileReducers,
+    comment: commentReducers,
 })
 export default createRootReducer;

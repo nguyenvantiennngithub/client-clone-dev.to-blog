@@ -6,7 +6,7 @@ import { uploadImageBlog } from '../../../api';
 import FileField from '../../../components/Field/FileField';
 import { useDispatch, useSelector } from 'react-redux';
 import {resetMessage, updateInfoUser} from '../../../redux/actions';
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState} from 'react';
 
 import './Profile.scss'
 
@@ -15,7 +15,6 @@ function Profile(){
     const dispatch = useDispatch();
     var [isUploading, setIsUploading] = useState(false);
     const {user, message} = useSelector(state => state.loginUser);
-    var messageSuccess = useRef();
     useEffect(()=>{
         return ()=>{
             if (message !== ''){

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import parseHTML from 'html-react-parser';
 import moment from "moment";
+import Discussion from "../../../components/Discussion";
 
 
 function Mid({post, author}){
@@ -50,6 +51,10 @@ function Mid({post, author}){
                     {parseHTML(post.content.html)}
                 </div>
             </div>
+
+            <hr/>
+            <Discussion></Discussion>
+            
         </div>
     )
 }

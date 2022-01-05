@@ -1,0 +1,119 @@
+.ccomment {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0;
+  &.reply {
+    padding-left: 52px;
+    margin-top: -16px;
+  }
+  &__forgot {
+    display: flex;
+  }
+  &__avatar {
+    margin-right: 8px;
+    &-img {
+      height: 44px;
+      width: 44px;
+      border-radius: 50%;
+      border: 1px solid #717171;
+    }
+  }
+  &__content {
+    flex-grow: 1;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: large;
+    &-info {
+      display: flex;
+      justify-content: space-between;
+      &-left {
+        &-username {
+          font-weight: 500;
+          font-size: 20px;
+          margin-right: 12px;
+        }
+        &-date {
+          color: #717171;
+          font-size: 16px;
+        }
+        &-text {
+          padding: 20%;
+        }
+      }
+      &-right {
+        padding: 8px 16px;
+        border-radius: 8px;
+        position: relative;
+        &-dropdown {
+          position: absolute;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          min-width: 250px;
+          right: 0;
+          top: 40px;
+          background-color: white;
+          padding: 8px;
+          &-item {
+            border-radius: 8px;
+            padding: 8px 12px;
+
+            &:hover {
+              background-color: rgba(59, 73, 223, 0.1);
+            }
+            &:hover &-text {
+              color: blue;
+            }
+          }
+        }
+        &:hover {
+          cursor: pointer;
+          background-color: #ccc;
+        }
+      }
+    }
+  }
+  &__footer {
+    display: flex;
+    justify-content: flex-start;
+    margin: 8px 0px 0px 52px;
+    &-container {
+      margin-right: 8px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: flex;
+      &:hover {
+        background-color: #ccc;
+      }
+      &-icon {
+        margin: auto 8px auto 0;
+        display: block;
+        &.heart {
+          color: red;
+        }
+        &.rotate {
+          transform: scaleX(-1);
+        }
+      }
+    }
+  }
+  &__more {
+    margin-left: 52px;
+    cursor: pointer;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 12px;
+
+    &:hover {
+      // background-color: #ccc;
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}

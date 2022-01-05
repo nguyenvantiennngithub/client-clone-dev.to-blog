@@ -26,6 +26,7 @@ const INIT_STATE = {
         data: {
             author: {},
             post: {content: {}},
+            comment: [],
         },
         isLoading: false,
         isLoaded: false,

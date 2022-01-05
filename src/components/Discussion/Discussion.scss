@@ -1,0 +1,9 @@
+.discussion {
+  padding: 32px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+}
