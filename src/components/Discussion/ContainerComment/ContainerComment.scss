@@ -47,6 +47,7 @@
         border-radius: 8px;
         position: relative;
         &-dropdown {
+          z-index: 1;
           position: absolute;
           border: 1px solid #ccc;
           border-radius: 8px;

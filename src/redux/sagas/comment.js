@@ -28,7 +28,7 @@ function* showReply(action){
     try {
         const res = yield call(api.showReply, action.payload);
         console.log(res.data);
-        yield put(actions.showReply.showReplySuccess({data: [...res.data], idParent: action.payload, isReply: true}))
+        yield put(actions.showReply.showReplySuccess({data: [...res.data], idParent: action.payload.id, isReply: true}))
     } catch (error) {
         console.log(error)
         yield put(actions.showReply.showReplyFailure(error))
@@ -46,11 +46,35 @@ function* heartComment(action){
     }
 }
 
+function* editComment(action){
+    try {
+        const res = yield call(api.editComment, action.payload);
+        console.log(res.data);
+        yield put(actions.editComment.editCommentSuccess({comment: res.data.comment, id: action.payload.id}))
+    } catch (error) {
+        console.log(error)
+        yield put(actions.editComment.editCommentFailure(error))
+    }
+}
+
+function* deleteComment(action){
+    try {
+        const res = yield call(api.deleteComment, action.payload);
+        console.log(res.data);
+        yield put(actions.deleteComment.deleteCommentSuccess({comment: res.data.comment, reply: action.payload.reply, id: action.payload.id}))
+    } catch (error) {
+        console.log(error)
+        yield put(actions.deleteComment.deleteCommentFailure(error))
+    }
+}
+
 function* auth(){
     yield takeLatest(actions.comment.commentRequest, comment);
     yield takeLatest(actions.reply.replyRequest, reply);
     yield takeLatest(actions.showReply.showReplyRequest, showReply);
     yield takeLatest(actions.heartComment.heartCommentRequest, heartComment);
+    yield takeLatest(actions.editComment.editCommentRequest, editComment);
+    yield takeLatest(actions.deleteComment.deleteCommentRequest, deleteComment);
     
 }
 

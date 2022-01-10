@@ -27,9 +27,21 @@ const heartComment = createActions({
     heartCommentFailure: (err) => err,
 })
 
+const editComment = createActions({
+    editCommentRequest: (payload) => payload,
+    editCommentSuccess: (payload) => payload,
+    editCommentFailure: (err) => err,
+})
+
+const deleteComment = createActions({
+    deleteCommentRequest: (payload) => payload,
+    deleteCommentSuccess: (payload) => payload,
+    deleteCommentFailure: (err) => err,
+})
+
 const hideReply = createAction('hide reply')
 const showReplyAgain = createAction('show reply again')
 
 
 
-export {comment, reply, showReply, hideReply, showReplyAgain, heartComment}
+export {comment, reply, showReply, hideReply, showReplyAgain, heartComment, editComment, deleteComment}

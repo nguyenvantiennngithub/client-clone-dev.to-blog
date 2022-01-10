@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import {useParams} from 'react-router-dom'
 import { Button } from 'reactstrap';
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import './Comment.scss'
-import { comment, reply } from '../../../redux/actions';
+import { comment, editComment, reply } from '../../../redux/actions';
 
-function Comment({isReply = false, setIsShowComment, idParent}){
+function Comment({isReply = false, setIsShowComment, idParent, isEdit, setIsShowCommentEdit, cmt}){
 
     const dispatch = useDispatch();
     var [isActiveTextArea, setIsActiveTextArea] = useState(isReply);
     var [isActiveBtnSubmit, setIsActiveBtnSubmit] = useState(true);
+    const {user} = useSelector(state => state.loginUser)
     var inputEle = useRef();
     const {slug} = useParams();
 
@@ -36,12 +37,18 @@ function Comment({isReply = false, setIsShowComment, idParent}){
     }
 
     function handleSubmit(){
-        if (!isReply){
-            dispatch(comment.commentRequest({slug, comment: inputEle.current.value}));
-            setIsActiveTextArea(false);
-        }else{
-            dispatch(reply.replyRequest({slug, comment: inputEle.current.value, idParent}))
+        if (isEdit){//Edit
+            dispatch(editComment.editCommentRequest({id: cmt._id, comment: inputEle.current.value}))
             setIsShowComment(false);
+            setIsShowCommentEdit(false);
+        }else{
+            if (!isReply){//Comment
+                dispatch(comment.commentRequest({slug, comment: inputEle.current.value}));
+                setIsActiveTextArea(false);
+            }else{//Reply
+                dispatch(reply.replyRequest({slug, comment: inputEle.current.value, idParent}))
+                setIsShowComment(false);
+            }
         }
         inputEle.current.value = "";
         inputEle.current.blur();
@@ -53,8 +60,8 @@ function Comment({isReply = false, setIsShowComment, idParent}){
                 !isReply && (
                     <div className="comment__avatar">
                         <img
-                            src="http://res.cloudinary.com/vantiennn/image/upload/v1640962647/BlogProject/Post/7418aedf613f30b0d194916cdfd06481.jpg"
-                            alt=""
+                            src={user.avatar}
+                            alt={"avatar of " + user.displayName}
                             className="comment__avatar-img"
                         />
                     </div>
@@ -80,7 +87,9 @@ function Comment({isReply = false, setIsShowComment, idParent}){
                             >
                                 Cancel
                             </Button>
-                            <Button color='primary' onClick={handleSubmit} disabled={isActiveBtnSubmit}>Submit</Button>
+                            <Button color='primary' onClick={handleSubmit} disabled={isActiveBtnSubmit}>
+                                {isEdit ? "Edit" : "Submit"}
+                            </Button>
                         </div>
                     ) 
                 }

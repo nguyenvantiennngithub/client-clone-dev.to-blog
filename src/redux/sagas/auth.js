@@ -73,6 +73,7 @@ function* auth(){
     yield takeLatest(actions.loginUser.loginUserRequest, loginUser);   
     yield takeLatest(actions.updateInfoUser.updateInfoUserRequest, updateInfoUser);   
     yield takeLatest(actions.changePassword.changePasswordRequest, changePassword);   
+    
 }
 
 export default auth
