@@ -13,18 +13,22 @@ function Right({author, isLoggedIn, user}){
         <div className="postDetail__right">
             <div className="postDetail__right-header">
                 <div className="postDetail__right-header-container">
-                    <img 
-                        className="postDetail__right-header-image"
-                        src={author.avatar}
-                        alt={"avatar of " + author.displayName}    
-                    />
+                    <Link to={'/user/' + user.username}>
+                        <img 
+                            className="postDetail__right-header-image"
+                            src={author.avatar}
+                            alt={"avatar of " + author.displayName}    
+                        />
+                    </Link>
                 </div>
                 <div className="postDetail__right-header-container">
-                    <span className="postDetail__right-header-name">{author.displayName || author.username}</span>
+                    <Link to={'/user/' + user.username} className="postDetail__right-header-name">
+                        <span>{author.displayName || author.username}</span>
+                    </Link>
                 </div>
             </div>
             {
-                (author.username === username) ? <Link to={'/user/' + author.username}><Button  className="postDetail__right-follow" color="primary" block>Edit profile</Button></Link>
+                (author.username === username) ? <Link to={'/settings'}><Button className="postDetail__right-follow" color="primary" block>Edit profile</Button></Link>
                     :        
                     (isFollowing) ? <Button  className="postDetail__right-follow" onClick={handleToggleFollowing} color="secondary" block>Following</Button>
                         :

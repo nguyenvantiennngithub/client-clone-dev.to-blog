@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {useParams} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import { Button } from 'reactstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import './Comment.scss'
@@ -58,13 +58,15 @@ function Comment({isReply = false, setIsShowComment, idParent, isEdit, setIsShow
         <div className={ (isReply) ? "comment reply" : "comment" } >
             {
                 !isReply && (
-                    <div className="comment__avatar">
-                        <img
-                            src={user.avatar}
-                            alt={"avatar of " + user.displayName}
-                            className="comment__avatar-img"
-                        />
-                    </div>
+                    <Link to={'/user/' + user.username}>
+                        <div className="comment__avatar">
+                            <img
+                                src={user.avatar}
+                                alt={"avatar of " + user.displayName}
+                                className="comment__avatar-img"
+                            />
+                        </div>
+                    </Link>
                 )
             }
            

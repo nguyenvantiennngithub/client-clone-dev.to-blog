@@ -24,6 +24,8 @@
       &-username {
         font-size: 18px;
         font-weight: 500;
+        text-decoration: none;
+        color: black;
       }
       &-date {
         font-size: 12px;
@@ -89,4 +91,9 @@
       }
     }
   }
+}
+
+.link {
+  color: black;
+  text-decoration: none;
 }

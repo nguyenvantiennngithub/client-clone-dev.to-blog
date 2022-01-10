@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Spinner } from "reactstrap";
 
 import './LoadingError.scss'
@@ -18,7 +17,7 @@ function LoadingError({data, children}){
         return (
             <div className="loadingError">
                 <div className="loadingError__container">
-                <h2>There are some error, return <Link to="/">Home page</Link></h2>
+                    <h2>404 Not Found <a href="/">Home page</a></h2>
                 </div>
             </div>
         )

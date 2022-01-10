@@ -1,7 +1,11 @@
 const axios = require('axios');
 
-// const URL = 'https://server-blog-vantiennn.herokuapp.com'
-const URL = 'http://localhost:8080'
+var URL;
+if (window.location.host === "localhost:3000"){
+    URL = 'http://localhost:8080'
+}else{
+    URL = 'https://server-blog-vantiennn.herokuapp.com'
+}
 
 
 const comment = (payload) => axios.post(`${URL}/comment/`, payload, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});

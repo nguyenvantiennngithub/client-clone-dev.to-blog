@@ -12,11 +12,11 @@ import { useEffect } from "react";
 import PostDetail from "./pages/PostDetail";
 import CreatePostPage from "./pages/CreatePostPage";
 import EditPostPage from "./pages/EditPostPage";
-import NotFound from "./pages/NotFound";
 import ProfilePage from "./pages/ProfilePage";
 import DashboardPage from "./pages/DashboardPage";
 import LoadingError from "./components/LoadingError";
 import SettingPage from "./pages/SettingPage";
+import NotFound from "./components/NotFound";
 
 function App() {  
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ function App() {
   // Middleware check if user is logged
   // User cant access this page (login, register)
   const CheckIsAlreadyLogin = function ({children}){
+    console.log({token, isVerify})
     if (token && isVerify){
       return <Navigate to="/"/>;
     }
@@ -86,7 +87,7 @@ function App() {
               <Route path="/user/:username" exact element={<ProfilePage/>}/>
 
               <Route path="/" exact element={<CheckLogin> <HomePage/> </CheckLogin>}/>
-              <Route path="*" exact element={<NotFound/>}/>
+              <Route path="*" element={<NotFound/>}/>
             </Routes>
             <Footer/>
           </>

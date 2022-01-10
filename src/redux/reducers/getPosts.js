@@ -51,7 +51,7 @@ function getPostsReducers(state = INIT_STATE.getPosts, action){
             return {
                 ...state,
                 data: state.data.map(item => {
-                    return item.post.slug === action.payload.post.slug ? action.payload : item; 
+                    return item.post.slug === action.payload.slug ? {...item, post: action.payload} : item; 
                 })
             }
         }

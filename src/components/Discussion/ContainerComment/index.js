@@ -1,7 +1,6 @@
 import './ContainerComment.scss'
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import {FaRegComment} from 'react-icons/fa'
-
 import {FiMoreHorizontal} from 'react-icons/fi'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -75,17 +74,19 @@ function ContainerComment({data}){
         <div className= {isReply ? "ccomment reply" : "ccomment"} hidden={isHide} >
             <div className="ccomment__forgot">
                 <div className="ccomment__avatar">
-                    <img
-                        src={author.avatar}
-                        alt={"avatar of " + author.displayName}
-                        className="ccomment__avatar-img"
-                    />
+                    <Link to={'/user/' + author.username}>
+                        <img
+                            src={author.avatar}
+                            alt={"avatar of " + author.displayName}
+                            className="ccomment__avatar-img"
+                        />
+                    </Link>
                 </div>
 
                 <div className='ccomment__content'>
                     <div className='ccomment__content-info'>
                         <div className='ccomment__content-info-left'>
-                            <Link to="/" className='link'>
+                            <Link to={'/user/' + author.username} className='link'>
                                 <span className='ccomment__content-info-left-username'>{author.displayName}</span>
                             </Link>
                             <span className='ccomment__content-info-left-date'>{moment(cmt.createdAt).format("MMM DD")}</span>

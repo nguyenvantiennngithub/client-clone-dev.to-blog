@@ -22,12 +22,6 @@ function Discussion(){
                     return <ContainerComment key={index} data={{...item}}></ContainerComment>
                 })
             }
-{/* 
-
-            <ContainerComment></ContainerComment>
-            <ContainerComment></ContainerComment>
-            <ContainerComment isReply={true}></ContainerComment>
-            <ContainerComment></ContainerComment> */}
         </div>
     )
 }

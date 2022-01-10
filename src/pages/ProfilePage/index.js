@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {Button, Col, Container, Row} from 'reactstrap'
 import LoadingError from '../../components/LoadingError'
 import useToggle from '../../hooks/useToggle'
-import { clearProfile, following, getProfile } from '../../redux/actions'
+import { following, getProfile } from '../../redux/actions'
 import { typeUpdateFollow, typeUpdateReaction } from '../../redux/constants'
 import Post from '../HomePage/Post'
 import './ProfilePage.scss'
@@ -14,11 +14,8 @@ function ProfilePage(){
     const {username} = useParams();
 
     useEffect(()=>{
+        console.log("GET PROFILE")
         dispatch(getProfile.getProfileRequest(username));
-        
-        return ()=>{
-            return dispatch(clearProfile())
-        }
     }, [username, dispatch])
 
     const {author, posts, isLoading, isLoaded, isError} = useSelector(state => state.profile)
@@ -33,12 +30,12 @@ function ProfilePage(){
 
 
     const [isFollowing, handleToggleFollowing] = useToggle(author.username, user.following, isLoggedIn, following.followingRequest, {author: author.username}, typeUpdateFollow.profile)
-
+    console.log(posts)
 
     return (
         <LoadingError data={{isLoading, isLoaded, isError}}>
             <LoadingError data={{isLoading: isLoadingUser, isLoaded: isVerifyUser, isError: isErrorUser}}>
-                <div class="profile">
+                <div className="profile">
                     <Container fluid="xl">
                         <Row>
                             <Col
@@ -61,7 +58,9 @@ function ProfilePage(){
                                         <div className="profile__header-avatar-btn">
                                             {
                                                 (user.username === author.username) ?
-                                                    <Button color="primary" className="profile__header-avatar-btn-item">Edit profile</Button>
+                                                    <Link to="/settings">
+                                                        <Button color="primary" className="profile__header-avatar-btn-item">Edit profile</Button>
+                                                    </Link>
                                                 :
                                                 (isFollowing) ? <Button className="profile__header-avatar-btn-item" onClick={handleToggleFollowing} color="danger" block>Unfollow</Button>
                                                     :

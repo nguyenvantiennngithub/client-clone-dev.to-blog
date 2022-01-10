@@ -76,6 +76,8 @@
           cursor: pointer;
           font-size: 20px;
           font-weight: 500;
+          color: black;
+          text-decoration: none;
 
           &:hover {
             color: #3b49df;
@@ -151,6 +153,8 @@
       &-name {
         font-size: 20px;
         font-weight: 500;
+        color: black;
+        text-decoration: none;
       }
     }
     &-follow {

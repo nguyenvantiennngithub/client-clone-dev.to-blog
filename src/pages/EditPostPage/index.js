@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CreatePost from "../../components/CreatePost";
 import LoadingError from "../../components/LoadingError";
-import { clearPostAuthor, editPost, getPost } from "../../redux/actions";
+import { editPost, getPost } from "../../redux/actions";
 
 
 function EditPostPage(){
@@ -13,9 +13,6 @@ function EditPostPage(){
 
     useEffect(()=>{
         dispatch(getPost.getPostRequest(slug))
-        return ()=>{
-            return dispatch(clearPostAuthor())
-        }
     }, [dispatch, slug]);
 
 
@@ -29,7 +26,7 @@ function EditPostPage(){
         content: {html: post.content.html, text: post.content.text},  
         cover: {src: post.cover, alt: 'Cover image of post'} 
     }
-    
+    console.log(initialValues)
     function submit(values){
         //convert tags from string to array
         var tags = values.tags.split(',').map(item => item.replace(/ /g, '')).filter(item => item !== '');

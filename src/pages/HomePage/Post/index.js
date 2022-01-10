@@ -8,11 +8,13 @@ import { useSelector } from 'react-redux';
 import './Post.scss'
 
 function Post({data, typeUpdateReaction}){
-    console.log(data)
     const {post, author} = data;
     var {user, isVerify, token} = useSelector((state) =>{
         return state.loginUser
     })
+    
+    
+    
     const username = user && user.username;
     const isLoggedIn = (isVerify && token);//verify is true and token is true is loggedin
 
@@ -20,18 +22,24 @@ function Post({data, typeUpdateReaction}){
     const [isHeart, handleToggleHeart] = useToggle(username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug}, typeUpdateReaction)
     const [isBookmark, handleToggleBookmark] = useToggle(username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug}, typeUpdateReaction);
 
+
+
     return (
         <div className="post">
             <div className="post__header">
                 <div className="post__header-img-container">
-                    <img 
-                        className="post__header-img"
-                        alt={"avatar of " + author.username}
-                        src={author.avatar}
-                    />
+                    <Link to={"user/"+author.username}>
+                        <img 
+                            className="post__header-img"
+                            alt={"avatar of " + author.username}
+                            src={author.avatar}
+                        />
+                    </Link>
                 </div>
                 <div className="post__header-info">
-                    <span className="post__header-info-username">{author.username}</span>
+                    <Link to={"user/"+author.username} className="post__header-info-username">
+                        <span>{author.username}</span>
+                    </Link>
                     <span className="post__header-info-date">{'Post on ' + moment(post.createdAt).format('ll') + ' (' + moment(post.createdAt).fromNow() + ')'}</span>
                 </div>
             </div>
@@ -43,7 +51,6 @@ function Post({data, typeUpdateReaction}){
             </h2>
 
             <div className="post__tags">
-                {/* {post.tags.map((item, index)=>{ */}
                 {post.tags.map((item, index)=>{
                     return (
                         <Link to={'/' + item} key={index} className="post__tags-item">
@@ -61,10 +68,12 @@ function Post({data, typeUpdateReaction}){
                         }
                         {post.heart.length + ' Hearts'}
                     </div>
-                    <div className="post__footer-left-item">
-                        <FaRegComment className="post__footer-left-item-icon rotate90"/>
-                        Comments
-                    </div>
+                    <Link to={'/post/' + post.slug + '#comment'} className='link'>
+                        <div className="post__footer-left-item" >
+                            <FaRegComment className="post__footer-left-item-icon rotate90"/>
+                            Comments
+                        </div>
+                    </Link>
                     
                 </div>
 

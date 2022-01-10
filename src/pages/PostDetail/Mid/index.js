@@ -2,11 +2,18 @@ import { Link } from "react-router-dom"
 import parseHTML from 'html-react-parser';
 import moment from "moment";
 import Discussion from "../../../components/Discussion";
+import { useEffect, useRef } from "react";
 
 
 function Mid({post, author}){
+    const commentEle = useRef();
+    useEffect(()=>{
+        if (window.location.href.includes('#comment')){
+            window.scrollTo(0, commentEle.current.offsetTop);
+        }
+    }, [commentEle])
     return (
-        <div className="postDetail__mid">
+        <div className="postDetail__mid" >
             {post.cover && 
                 <div className="postDetail__mid-cover">
                     <img 
@@ -19,15 +26,21 @@ function Mid({post, author}){
 
             <div className="postDetail__mid-header">
                 <div className="postDetail__mid-header-author">
+                    <Link to={'/user/' + author.username} >
+                        <div className="postDetail__mid-header-author-container">
+
+                            <img 
+                                className="postDetail__mid-header-author-img"
+                                src={author.avatar} 
+                                alt={'avatar of ' + author.displayName}    
+                            />
+                        </div>   
+                    </Link>
+
                     <div className="postDetail__mid-header-author-container">
-                        <img 
-                            className="postDetail__mid-header-author-img"
-                            src={author.avatar} 
-                            alt={'avatar of ' + author.displayName}    
-                        />
-                    </div>     
-                    <div className="postDetail__mid-header-author-container">
-                        <span className="postDetail__mid-header-author-name">{author.displayName || author.username}</span>
+                        <Link to={'/user/' + author.username}  className="postDetail__mid-header-author-name">
+                            <span>{author.displayName || author.username}</span>
+                        </Link>
                         <span className="postDetail__mid-header-author-date">
                             {'Post on ' + moment(post.createdAt).format('ll') + ' (' + moment(post.createdAt).fromNow() + ')'}
                         </span>
@@ -53,7 +66,9 @@ function Mid({post, author}){
             </div>
 
             <hr/>
-            <Discussion></Discussion>
+            <div id="comment" ref={commentEle}>
+                <Discussion></Discussion>
+            </div>
             
         </div>
     )

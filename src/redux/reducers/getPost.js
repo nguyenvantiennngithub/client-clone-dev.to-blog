@@ -41,7 +41,10 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         case getType(heartPost.heartPostSuccess):{
             return {
                 ...state,
-                data: action.payload,
+                data: {
+                    ...state.data,
+                    post: action.payload
+                },
             }
         }
 
@@ -60,7 +63,10 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         case getType(bookmark.bookmarkSuccess):{
             return {
                 ...state,
-                data: action.payload,
+                data: {
+                    ...state.data,
+                    post: action.payload
+                },
             }
         }
 
@@ -79,6 +85,7 @@ function getPostReducers(state = INIT_STATE.getPost, action){
                 data: {
                     author: {},
                     post: {},
+                    comment: [],
                 },
                 isLoaded: false,
                 

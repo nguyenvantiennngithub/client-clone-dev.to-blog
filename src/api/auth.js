@@ -1,8 +1,11 @@
 const axios = require('axios');
 
-// const URL = 'https://server-blog-vantiennn.herokuapp.com'
-const URL = 'http://localhost:8080'
-
+var URL;
+if (window.location.host === "localhost:3000"){
+    URL = 'http://localhost:8080'
+}else{
+    URL = 'https://server-blog-vantiennn.herokuapp.com'
+}
 
 const registerUser = (payload)=> axios.post(`${URL}/auth/register-user`, payload)
 const checkLogin = (payload)=> axios.post(`${URL}/auth/login`, payload)

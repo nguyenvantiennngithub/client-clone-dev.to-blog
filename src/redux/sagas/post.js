@@ -38,10 +38,12 @@ function* heartPost(action){
         const res = yield call(api.heartPost, action.payload);
         console.log("isUpdatePostInPosts", action.payload.isUpdatePostInPosts, res.data)
         if (action.payload.typeUpdateReaction === typeUpdateReaction.posts){
-            yield put(actions.updatePostOfPosts.updatePostOfPostsSuccess(res.data))
-        }else if (action.payload.typeUpdateReaction === typeUpdateReaction.post){
-            yield put(actions.heartPost.heartPostSuccess(res.data))
-        }else if (action.payload.typeUpdateReaction === typeUpdateReaction.personalPosts){
+            yield put(actions.updatePostOfPosts.updatePostOfPostsSuccess(res.data.post))
+        }
+        else if (action.payload.typeUpdateReaction === typeUpdateReaction.post){
+            yield put(actions.heartPost.heartPostSuccess(res.data.post))
+        }
+        else if (action.payload.typeUpdateReaction === typeUpdateReaction.personalPosts){
             yield put(actions.updatePostInProfile.updatePostInProfileSuccess(res.data))
         }
 
@@ -57,10 +59,12 @@ function* bookmark(action){
         const res = yield call(api.bookmark, action.payload);
 
         if (action.payload.typeUpdateReaction === typeUpdateReaction.posts){
-            yield put(actions.updatePostOfPosts.updatePostOfPostsSuccess(res.data))
-        }else if (action.payload.typeUpdateReaction === typeUpdateReaction.post){
-            yield put(actions.bookmark.bookmarkSuccess(res.data))
-        }else if (action.payload.typeUpdateReaction === typeUpdateReaction.personalPosts){
+            yield put(actions.updatePostOfPosts.updatePostOfPostsSuccess(res.data.post))
+        }
+        else if (action.payload.typeUpdateReaction === typeUpdateReaction.post){
+            yield put(actions.bookmark.bookmarkSuccess(res.data.post))
+        }
+        else if (action.payload.typeUpdateReaction === typeUpdateReaction.personalPosts){
             yield put(actions.updatePostInProfile.updatePostInProfileSuccess(res.data))
         }
 

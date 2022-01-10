@@ -1,8 +1,12 @@
 const axios = require('axios');
+console.log( window.location.href)
 
-// const URL = 'https://server-blog-vantiennn.herokuapp.com'
-const URL = 'http://localhost:8080'
-
+var URL;
+if (window.location.host === "localhost:3000"){
+    URL = 'http://localhost:8080'
+}else{
+    URL = 'https://server-blog-vantiennn.herokuapp.com'
+}
 
 const getPosts = () => axios.get(`${URL}/post/all`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
 const uploadImageBlog = (url) => axios.post(`${URL}/post/upload-image`, url, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
