@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as actions from '../actions/'
 import * as api from '../../api/'
+import { typeUpdateComment } from "../constants";
 
 function* comment(action){
     try {
@@ -38,8 +39,13 @@ function* showReply(action){
 function* heartComment(action){
     try {
         const res = yield call(api.heartComment, action.payload);
-        console.log(res.data);
-        yield put(actions.heartComment.heartCommentSuccess({comment: res.data.comment, id: action.payload.id}))
+        console.log(res.data, action.payload);
+        if (action.payload.typeUpdateReaction === typeUpdateComment.post){
+            yield put(actions.heartComment.heartCommentSuccess({comment: res.data.comment, id: action.payload.id}))
+        }else if (action.payload.typeUpdateReaction === typeUpdateComment.notification){
+            yield put(actions.heartCommentNotification.heartCommentNotificationSuccess({comment: res.data.comment, id: action.payload.id}))
+
+        }
     } catch (error) {
         console.log(error)
         yield put(actions.heartComment.heartCommentFailure(error))

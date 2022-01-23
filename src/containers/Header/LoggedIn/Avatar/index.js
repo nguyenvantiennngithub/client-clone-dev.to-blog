@@ -3,6 +3,7 @@ import {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {signOut} from '../../../../redux/actions/'
 import './Avatar.scss'
+import socket from '../../../../utils/socket';
 
 function Avatar(){
     var [isShowDropDown, setIsShowDropDown] = useState(false);
@@ -17,6 +18,7 @@ function Avatar(){
 
     const handleSignOut = function(){
         dispatch(signOut());
+        socket.emit("logout success")
         navigate('/login')
     }
     return (

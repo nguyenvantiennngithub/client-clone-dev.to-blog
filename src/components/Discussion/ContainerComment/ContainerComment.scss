@@ -25,6 +25,13 @@
     border-radius: 8px;
     padding: 16px;
     font-size: large;
+    &-text-user {
+      color: #095aff;
+      font-weight: 500;
+      padding-right: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
     &-info {
       display: flex;
       justify-content: space-between;

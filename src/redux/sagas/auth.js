@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as actions from '../actions/'
 import * as api from '../../api/'
+import socket from "../../utils/socket";
 
 function* registerUser(action){
     try {
@@ -8,12 +9,16 @@ function* registerUser(action){
         const {status, user} = res.data
         console.log(res.data);
         yield put(actions.registerUser.registerUserSuccess(status))
+
         if (status.success){
             //auto loginUser when register new user success;
+            socket.emit("login success", {username: user.username});
             yield put(actions.verifyToken({token: true, user})); 
+
             const token = res.headers.authorization
             localStorage.setItem('token', token);
             yield put(actions.loginUser.loginUserSuccess({...status, user: user}))
+            
         }
     } catch (error) {
         console.log(error)
@@ -31,6 +36,8 @@ function* loginUser(action){
         console.log(status, user);
         if (status.success){
             console.log('verify')
+            socket.emit("login success", {username: user.username});
+
             yield put(actions.verifyToken({token: true, user})); 
 
             const token = res.headers.authorization;
@@ -70,10 +77,9 @@ function* changePassword(action){
 
 function* auth(){
     yield takeLatest(actions.registerUser.registerUserRequest, registerUser);
-    yield takeLatest(actions.loginUser.loginUserRequest, loginUser);   
+    yield takeLatest(actions.loginUser.loginUserRequest, loginUser);
     yield takeLatest(actions.updateInfoUser.updateInfoUserRequest, updateInfoUser);   
     yield takeLatest(actions.changePassword.changePasswordRequest, changePassword);   
-    
 }
 
 export default auth

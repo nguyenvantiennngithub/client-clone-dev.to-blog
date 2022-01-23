@@ -5,20 +5,24 @@ import {useDispatch, useSelector} from 'react-redux'
 import './Comment.scss'
 import { comment, editComment, reply } from '../../../redux/actions';
 
-function Comment({isReply = false, setIsShowComment, idParent, isEdit, setIsShowCommentEdit, cmt}){
+function Comment({isReply = false, isEdit = false, setIsShowComment, idParent, setIsShowCommentEdit, cmt, displayNameParent}){
 
+    console.log({cmt, isEdit, isReply})
     const dispatch = useDispatch();
     var [isActiveTextArea, setIsActiveTextArea] = useState(isReply);
     var [isActiveBtnSubmit, setIsActiveBtnSubmit] = useState(true);
     const {user} = useSelector(state => state.loginUser)
     var inputEle = useRef();
-    const {slug} = useParams();
-
+    const params = useParams();
+    const slug = params.slug ? params.slug : cmt.slug
     useEffect(()=>{
         if (isReply){
             inputEle.current.focus();
         }
-    }, [inputEle, isReply])
+        if (isEdit){
+            inputEle.current.value = cmt.comment;
+        }
+    }, [inputEle, isEdit, isReply, cmt])
 
     function handleActive(){
         setIsActiveTextArea(true);
@@ -46,7 +50,18 @@ function Comment({isReply = false, setIsShowComment, idParent, isEdit, setIsShow
                 dispatch(comment.commentRequest({slug, comment: inputEle.current.value}));
                 setIsActiveTextArea(false);
             }else{//Reply
-                dispatch(reply.replyRequest({slug, comment: inputEle.current.value, idParent}))
+                dispatch(reply.replyRequest(
+                    {
+                        slug, 
+                        idParent,//cái này là cái comment to nhất
+                        idParentReply: cmt._id,//cái này là cái id comment mà mình click vô để reply
+                        comment: inputEle.current.value, 
+                        replyClosest: {
+                            username: cmt.author, 
+                            displayName: displayNameParent
+                        }
+                    }
+                ))
                 setIsShowComment(false);
             }
         }
@@ -71,9 +86,11 @@ function Comment({isReply = false, setIsShowComment, idParent, isEdit, setIsShow
             }
            
             <div className="comment__content">
+            
+
                 <textarea 
                     className="comment__content-text" 
-                    placeholder='Add to the disscussion'
+                    placeholder={cmt ? "Replying to " + displayNameParent : "Add a discusstion"}
                     onClick={handleActive}
                     onChange={handleChangeTextArea}
                     ref={inputEle}

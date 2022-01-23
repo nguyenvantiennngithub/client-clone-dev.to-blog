@@ -52,13 +52,22 @@ const INIT_STATE = {
         isLoaded: false,
         author: {},
         posts: [],
+    },
+    getNotification:{
+        isLoading: false,
+        isError: false,
+        isLoaded: false,
+        data: [],
+        totalUnread: 0,
     }
+
 }
 
 const typeUpdateReaction = {
     post: 'post',//for postDetail
     posts: 'posts',//for homePage
-    personalPosts: 'personalPosts'//for userPage
+    personalPosts: 'personalPosts',//for userPage
+    notificationPosts: 'notificationPost'//for in notification page
 }
 
 const typeUpdateFollow = {
@@ -66,7 +75,24 @@ const typeUpdateFollow = {
     profile: 'follow profile'
 }
 
-export {typeUpdateReaction, typeUpdateFollow}
+const typeUpdateComment = {
+    post: 'comment post',
+    notification: 'comment notification'
+}
+
+const typeNotification = {
+    heartPost: "notification heart my post",
+    newPost: "notification new post",
+    commentPost: "notification comment" 
+}
+
+const typeEmit = {
+    heartPost: "emit notification heart my post",
+    commentPost: "emit notification comment post",
+    newPost: "emit notification has new post"
+}
+
+export {typeUpdateReaction, typeUpdateFollow, typeNotification, typeUpdateComment, typeEmit}
 
 
 export default INIT_STATE;

@@ -5,9 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import store from './redux/store.js'
 
-
-
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -16,5 +13,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-

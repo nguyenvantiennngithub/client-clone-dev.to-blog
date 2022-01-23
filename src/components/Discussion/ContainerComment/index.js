@@ -3,12 +3,13 @@ import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import {FaRegComment} from 'react-icons/fa'
 import {FiMoreHorizontal} from 'react-icons/fi'
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Comment from '../Comment';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteComment, heartComment, hideReply, showReply, showReplyAgain } from '../../../redux/actions';
 import useToggle from '../../../hooks/useToggle';
+import { typeUpdateComment } from '../../../redux/constants';
 function ContainerComment({data}){
     const {cmt, author, isReply, isHide} = data;
     const lengthNewReply = cmt.newReply ? cmt.newReply.length : 0;
@@ -17,7 +18,18 @@ function ContainerComment({data}){
     const dispatch = useDispatch();
     const comments = useSelector(state => state.getPost.data.comment)
     const {user, isVerify, token} = useSelector(state => state.loginUser)
-    
+    const hash = window.location.hash;
+    const containerCommentEle = useRef();
+    useEffect(()=>{
+        if (window.location.href.includes('#' + cmt._id)){
+            window.scrollTo(0, containerCommentEle.current.offsetTop);
+        }
+        else if (cmt.reply.includes(hash.substring(1))){
+            handleShowReply();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    // containerCommentEle, cmt._id, cmt.reply, hash
     
     var [isShowComment, setIsShowComment] = useState(false);
     var [isShowDropdown, setIsShowDropdown] = useState(false);
@@ -25,9 +37,10 @@ function ContainerComment({data}){
     var [isShowMore, setIsShowMore] = useState(true);
 
     const isLoggedIn = (isVerify && token);//verify is true and token is true is loggedin
-    const [isHeart, handleToggleHeart] = useToggle(user.username, cmt.heart, isLoggedIn, heartComment.heartCommentRequest, {id: cmt._id})
+    const [isHeart, handleToggleHeart] = useToggle(user.username, cmt.heart, isLoggedIn, heartComment.heartCommentRequest, {id: cmt._id}, typeUpdateComment.post)
     function handleReply(){
         setIsShowComment(true);
+        setIsShowCommentEdit(false);
     }
     function handleToggleDropdown(){
         setIsShowDropdown(!isShowDropdown)
@@ -71,7 +84,7 @@ function ContainerComment({data}){
     }
 
     return (
-        <div className= {isReply ? "ccomment reply" : "ccomment"} hidden={isHide} >
+        <div className= {isReply ? "ccomment reply" : "ccomment"} hidden={isHide} id={cmt._id} ref={containerCommentEle} >
             <div className="ccomment__forgot">
                 <div className="ccomment__avatar">
                     <Link to={'/user/' + author.username}>
@@ -92,7 +105,7 @@ function ContainerComment({data}){
                             <span className='ccomment__content-info-left-date'>{moment(cmt.createdAt).format("MMM DD")}</span>
                         </div>
 
-                        {
+                        {//... more option to delete or edit
                             user.username === cmt.author && (
 
                                 <div className='ccomment__content-info-right' onClick={handleToggleDropdown}>
@@ -111,7 +124,10 @@ function ContainerComment({data}){
                             )
                         }
                     </div>
-                    <span className='ccomment__content-text'>{cmt.comment}</span>
+                    <span className='ccomment__content-text'>
+                        {isReply && cmt.replyClosest && <Link to={'/user/' + cmt.replyClosest.username} className='ccomment__content-text-user'>{cmt.replyClosest.displayName}</Link>}
+                        {cmt.comment}
+                    </span>
                 </div>
             </div>
             {
@@ -131,10 +147,11 @@ function ContainerComment({data}){
                     <Comment 
                         isReply={true} 
                         setIsShowComment={setIsShowComment} 
-                        idParent={idParent} 
                         isEdit={isShowCommentEdit}
                         setIsShowCommentEdit={setIsShowCommentEdit}
-                        cmt={cmt}>
+                        idParent={idParent}
+                        cmt={cmt}
+                        displayNameParent={author.displayName}>
                     </Comment>
                 )
                 :

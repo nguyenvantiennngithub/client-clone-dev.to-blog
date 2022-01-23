@@ -4,7 +4,6 @@ function checkItemInList(item, list){
     const result = list.find((i) => {
         return i === item;
     })
-    console.log("RESULT", result, item)
     return Boolean(result)
 }
 

@@ -155,7 +155,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
                 data:{
                     ...state.data,
                     comment: state.data.comment.reduce((total = [], item)=>{
-                        console.log(item.cmt._id, action.payload.idParent)
                         if (item.cmt._id === action.payload.idParent){
                             total.push(
                                 {

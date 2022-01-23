@@ -41,7 +41,8 @@ const deleteComment = createActions({
 
 const hideReply = createAction('hide reply')
 const showReplyAgain = createAction('show reply again')
+const seenNotification = createAction('seen notification')
 
 
 
-export {comment, reply, showReply, hideReply, showReplyAgain, heartComment, editComment, deleteComment}
+export {comment, reply, showReply, hideReply, showReplyAgain, heartComment, editComment, deleteComment, seenNotification}

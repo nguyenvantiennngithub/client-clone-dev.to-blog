@@ -4,7 +4,6 @@ import './LoadingError.scss'
 
 function LoadingError({data, children}){
     const {isLoading, isLoaded, isError} = data;
-    console.log("Loading Error", {...data})
     if (isLoading || !isLoaded){
         return (
             <div className="loadingError">

@@ -1,0 +1,48 @@
+import './HeartPost.scss'
+import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { seenNotification } from '../../../redux/actions';
+function HeartPost({data}){
+    const {user} = useSelector(state => state.loginUser)
+    const {post, nearestHeartUser, notifi} = data;
+    const isReaded = notifi.seen.includes(user.username);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        if (!isReaded){
+            //dispatch to dosomeing
+            dispatch(seenNotification({username: user.username, id: notifi._id}))
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    return (
+        <div className={isReaded ? 'heartPost' : 'heartPost unread'}>
+            <div className='heartPost__top'>
+                <img
+                    className='heartPost__top-img'
+                    alt={"avatar of " + nearestHeartUser?.username}
+                    src={nearestHeartUser?.avatar}
+                />
+            </div>
+            <div className='heartPost__bottom'>
+                <Link className='heartPost__bottom-bold' to={"/user/" + nearestHeartUser?.username}>
+                    {nearestHeartUser?.displayName}  
+                </Link>
+                {
+                    post.heart.length === 1 && " reacted to "
+                }
+                {
+                    post.heart.length === 2 && ` and ${post.heart.length-1} order reacted to `
+                }
+                {
+                    post.heart.length > 2 && ` and ${post.heart.length-1} orders reacted to `
+                }
+                <Link className='heartPost__bottom-bold' to={"/post/" + post.slug}>
+                    {post.slug}
+                </Link>
+            </div>
+        </div>
+    )
+}
+
+export default HeartPost

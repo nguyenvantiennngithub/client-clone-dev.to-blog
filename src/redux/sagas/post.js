@@ -36,6 +36,7 @@ function* getPost(action){
 function* heartPost(action){
     try {
         const res = yield call(api.heartPost, action.payload);
+        
         console.log("isUpdatePostInPosts", action.payload.isUpdatePostInPosts, res.data)
         if (action.payload.typeUpdateReaction === typeUpdateReaction.posts){
             yield put(actions.updatePostOfPosts.updatePostOfPostsSuccess(res.data.post))
@@ -45,6 +46,9 @@ function* heartPost(action){
         }
         else if (action.payload.typeUpdateReaction === typeUpdateReaction.personalPosts){
             yield put(actions.updatePostInProfile.updatePostInProfileSuccess(res.data))
+        }
+        else if (action.payload.typeUpdateReaction === typeUpdateReaction.notificationPosts){
+            yield put(actions.updatePostInNotification.updatePostInNotificationSuccess(res.data))
         }
 
         console.log(res.data)
@@ -67,7 +71,9 @@ function* bookmark(action){
         else if (action.payload.typeUpdateReaction === typeUpdateReaction.personalPosts){
             yield put(actions.updatePostInProfile.updatePostInProfileSuccess(res.data))
         }
-
+        else if (action.payload.typeUpdateReaction === typeUpdateReaction.notificationPosts){
+            yield put(actions.updatePostInNotification.updatePostInNotificationSuccess(res.data))
+        }
 
         console.log(res.data)
     } catch (error) {

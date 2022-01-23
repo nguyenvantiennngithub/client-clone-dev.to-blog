@@ -5,10 +5,11 @@ import post from './post'
 import posts from './posts'
 import profile from './profile'
 import comment from './comment'
+import notification from './notification'
 
 
 function* mySaga(){
-    yield all([auth(), personal(), post(), posts(), profile(), comment()])
+    yield all([auth(), personal(), post(), posts(), profile(), comment(), notification()])
 }
 
 export default mySaga;
