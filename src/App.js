@@ -21,6 +21,7 @@ import socket from "./utils/socket";
 import NotificationPage from "./pages/NotificationPage";
 import { typeEmit } from "./redux/constants";
 import {addNotification, replaceNotification} from './redux/actions/index'
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 function App() {  
   const dispatch = useDispatch();
   const {token, isError, isVerify, isLoading, user} = useSelector(loginUser$);
@@ -38,7 +39,6 @@ function App() {
   // Middleware check if user is logged
   // User cant access this page (login, register)
   const CheckIsAlreadyLogin = function ({children}){
-    console.log({token, isVerify})
     if (token && isVerify){
       return <Navigate to="/"/>;
     }
@@ -85,15 +85,18 @@ function App() {
       }else{
         dispatch(addNotification(data))
       }
+      Notify.success("You have a new notiication");
     })
 
     //on event when user following make new post
     socket.on(typeEmit.newPost, function (data){
+      Notify.success("You have a new notiication");
       dispatch(addNotification(data))
     })
 
     socket.on(typeEmit.commentPost, function (data){
       dispatch(addNotification(data));
+      Notify.success("You have a new notiication");
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -111,7 +114,7 @@ function App() {
               <Route path="/settings/*" exact element={<CheckLogin> <SettingPage/> </CheckLogin>} />
               <Route path="/dashboard/*" exact element={<CheckLogin> <DashboardPage/> </CheckLogin>} />
               <Route path="/create-post" exact element={<CheckLogin> <CreatePostPage/> </CheckLogin>} />
-              <Route path="/notification" exact element={<CheckLogin> <NotificationPage/> </CheckLogin>} />
+              <Route path="/notification/*" exact element={<CheckLogin> <NotificationPage/> </CheckLogin>} />
               <Route path="/post/:slug" exact element={<PostDetail/>} />
               <Route path="/post/:slug/edit" exact element={<CheckLogin> <CheckUserIsPostAuthor> <EditPostPage/></CheckUserIsPostAuthor> </CheckLogin> }/>
               

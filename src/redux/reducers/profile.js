@@ -11,7 +11,6 @@ function profileReducers(state = INIT_STATE.profile, action){
         }
 
         case getType(getProfile.getProfileSuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading: false,
@@ -48,7 +47,6 @@ function profileReducers(state = INIT_STATE.profile, action){
         }   
 
         case getType(updatePostInProfile.updatePostInProfileSuccess):{
-            console.log(state)
             return {
                 ...state,
                 posts: state.posts.map(item => {

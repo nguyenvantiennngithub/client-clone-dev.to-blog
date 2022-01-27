@@ -4,7 +4,6 @@ import Follow from '../../../components/Follow'
 
 function Following(){
     const {following} = useSelector(state => state.getPersonalPosts)
-    console.log(following)
     return (
         <Container>
             <Row>

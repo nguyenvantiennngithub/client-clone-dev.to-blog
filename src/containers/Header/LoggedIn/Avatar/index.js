@@ -11,7 +11,6 @@ function Avatar(){
     const dispatch = useDispatch();
 
     const {user} = useSelector(state => state.loginUser);
-    console.log(user)
     const handleToggleDropDown = function (){
         setIsShowDropDown(!isShowDropDown);
     }

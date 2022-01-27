@@ -11,7 +11,6 @@ function* createPost(action){
         const res = yield call(api.createPost, action.payload.data);//data: all of post
         yield put(actions.createPost.createPostSuccess())
         yield put(actions.pushNewPost(res.data.slug))
-        console.log(res.data);
         if (res.data.slug){
             action.payload.navigate(`/post/${res.data.slug}`);
         }
@@ -26,7 +25,6 @@ function* getPost(action){
     try {
         const res = yield call(api.getPost, action.payload);
         yield put(actions.getPost.getPostSuccess(res.data))
-        console.log(res.data)
     } catch (error) {
         console.log('error getPost', error)
         yield put(actions.getPost.getPostFailure(error))
@@ -37,7 +35,6 @@ function* heartPost(action){
     try {
         const res = yield call(api.heartPost, action.payload);
         
-        console.log("isUpdatePostInPosts", action.payload.isUpdatePostInPosts, res.data)
         if (action.payload.typeUpdateReaction === typeUpdateReaction.posts){
             yield put(actions.updatePostOfPosts.updatePostOfPostsSuccess(res.data.post))
         }
@@ -50,8 +47,6 @@ function* heartPost(action){
         else if (action.payload.typeUpdateReaction === typeUpdateReaction.notificationPosts){
             yield put(actions.updatePostInNotification.updatePostInNotificationSuccess(res.data))
         }
-
-        console.log(res.data)
     } catch (error) {
         console.log('error heartPost', error)
         yield put(actions.heartPost.heartPostFailure(error))
@@ -74,8 +69,6 @@ function* bookmark(action){
         else if (action.payload.typeUpdateReaction === typeUpdateReaction.notificationPosts){
             yield put(actions.updatePostInNotification.updatePostInNotificationSuccess(res.data))
         }
-
-        console.log(res.data)
     } catch (error) {
         console.log('error bookmark', error)
         yield put(actions.bookmark.bookmarkFailure(error))
@@ -85,9 +78,7 @@ function* bookmark(action){
 function* following(action){
     try {
         const res = yield call(api.followUser, action.payload);
-
         yield put(actions.following.followingSuccess(res.data.my))
-        console.log(res.data)
     } catch (error) {
         console.log('error following', error)
         yield put(actions.following.followingFailure(error))
@@ -97,9 +88,7 @@ function* following(action){
 
 function* editPost(action){
     try {
-        console.log('edit post', action)
         const res = yield call(api.editPost, action.payload);
-        console.log("edit post data", res.data)
         yield put(actions.editPost.editPostSuccess(res.data))
         if (action.payload.data.slug){
             action.payload.navigate(`/post/${action.payload.data.slug}`);
@@ -112,9 +101,7 @@ function* editPost(action){
 
 function* deletePost(action){
     try {
-        console.log('getPersonalPosts', action)
         const res = yield call(api.deletePost, action.payload);
-        console.log("deletePosts data", res.data)
         if (res.data.status){
             yield put(actions.deletePost.deletePostSuccess(action.payload))
         }

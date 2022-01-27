@@ -1,12 +1,5 @@
-const axios = require('axios');
-
-var URL;
-if (window.location.host === "localhost:3000"){
-    URL = 'http://localhost:8080'
-}else{
-    URL = 'https://server-blog-vantiennn.herokuapp.com'
-}
-
+import axios from 'axios';
+const URL = process.env.REACT_APP_API_URL;
 
 const comment = (payload) => axios.post(`${URL}/comment/`, payload, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});
 const showReply = (payload) => axios.get(`${URL}/comment/${payload.id}`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});

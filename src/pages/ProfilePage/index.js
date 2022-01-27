@@ -14,7 +14,6 @@ function ProfilePage(){
     const {username} = useParams();
 
     useEffect(()=>{
-        console.log("GET PROFILE")
         dispatch(getProfile.getProfileRequest(username));
     }, [username, dispatch])
 
@@ -28,9 +27,7 @@ function ProfilePage(){
     const token = loginUser.token
     const isLoggedIn = (isVerifyUser && token);
 
-
     const [isFollowing, handleToggleFollowing] = useToggle(author.username, user.following, isLoggedIn, following.followingRequest, {author: author.username}, typeUpdateFollow.profile)
-    console.log(posts)
 
     return (
         <LoadingError data={{isLoading, isLoaded, isError}}>

@@ -17,7 +17,6 @@ function EditPostPage(){
 
 
     const {data, isLoading, isLoaded, isError} = useSelector(state => state.getPost)
-    console.log(data)
 
     const {post} = data;
     const initialValues = { 
@@ -26,7 +25,7 @@ function EditPostPage(){
         content: {html: post.content.html, text: post.content.text},  
         cover: {src: post.cover, alt: 'Cover image of post'} 
     }
-    console.log(initialValues)
+
     function submit(values){
         //convert tags from string to array
         var tags = values.tags.split(',').map(item => item.replace(/ /g, '')).filter(item => item !== '');
@@ -37,7 +36,6 @@ function EditPostPage(){
             tags: tags, 
             slug: slug
         }
-        console.log(data)
         //redirect to this post detail after create post success
         dispatch(editPost.editPostRequest({data, navigate: (url)=>navigate(url)}));
     }

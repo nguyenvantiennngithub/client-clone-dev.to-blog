@@ -1,5 +1,5 @@
 import INIT_STATE from '../constants'
-import {addNotification, getNotification, getType, heartCommentNotification, replaceNotification, updatePostInNotification} from '../actions'
+import {addNotification, getNotification, getType, heartCommentNotification, replaceNotification, updatePostInNotification, updateUnreadNotification} from '../actions'
 function loginUserReducers(state = INIT_STATE.getNotification, action){
     // console.log('reducers/loginUser', action)
     switch(action.type){
@@ -12,7 +12,6 @@ function loginUserReducers(state = INIT_STATE.getNotification, action){
         }
 
         case getType(getNotification.getNotificationSuccess):{
-            console.log('getNotificationSuccess', action.payload)
             return {
                 ...state,
                 data: action.payload.result,
@@ -39,7 +38,6 @@ function loginUserReducers(state = INIT_STATE.getNotification, action){
         }   
 
         case getType(updatePostInNotification.updatePostInNotificationSuccess):{
-            console.log(state)
             return {
                 ...state,
                 data: state.data.map(item => {
@@ -61,7 +59,6 @@ function loginUserReducers(state = INIT_STATE.getNotification, action){
         }
 
         case getType(heartCommentNotification.heartCommentNotificationSuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 data: state.data.map(item => {
@@ -82,7 +79,6 @@ function loginUserReducers(state = INIT_STATE.getNotification, action){
         }
 
         case getType(addNotification):{
-            console.log("addnotification", action.payload)
             return{
                 ...state,
                 data: [action.payload, ...state.data],
@@ -91,7 +87,6 @@ function loginUserReducers(state = INIT_STATE.getNotification, action){
         }
 
         case getType(replaceNotification):{
-            console.log("addnotification", action.payload)
             return{
                 ...state,
                 data: state.data.reduce((total, item) =>{
@@ -105,6 +100,12 @@ function loginUserReducers(state = INIT_STATE.getNotification, action){
             }
         }
 
+        case getType(updateUnreadNotification):{
+            return {
+                ...state,
+                totalUnread: 0,
+            }
+        }
         default:{
             return state
         }

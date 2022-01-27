@@ -17,10 +17,8 @@ function DashboardPage(){
         dispatch(getPersonalPosts.getPersonalPostsRequest('created-desc'));
     }, [dispatch])
 
-
     const {user, isLoading, isError, isVerify} = useSelector(state => state.loginUser)
     const personal = useSelector(state => state.getPersonalPosts)
-
 
     return (
         <LoadingError data={{isLoading, isLoaded: isVerify, isError}}>

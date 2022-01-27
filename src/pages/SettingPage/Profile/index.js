@@ -15,6 +15,7 @@ function Profile(){
     const dispatch = useDispatch();
     var [isUploading, setIsUploading] = useState(false);
     const {user, message} = useSelector(state => state.loginUser);
+    
     useEffect(()=>{
         return ()=>{
             if (message !== ''){

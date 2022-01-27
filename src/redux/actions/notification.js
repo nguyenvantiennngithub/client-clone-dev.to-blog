@@ -21,5 +21,6 @@ const heartCommentNotification = createActions({
 
 const addNotification = createAction('add notification')
 const replaceNotification = createAction('replace notification')
+const updateUnreadNotification = createAction('updateUnreadNotification')
 
-export {getNotification, updatePostInNotification, heartCommentNotification, addNotification, replaceNotification}
+export {getNotification, updatePostInNotification, heartCommentNotification, addNotification, replaceNotification, updateUnreadNotification}

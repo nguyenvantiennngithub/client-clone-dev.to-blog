@@ -7,7 +7,6 @@ import { comment, editComment, reply } from '../../../redux/actions';
 
 function Comment({isReply = false, isEdit = false, setIsShowComment, idParent, setIsShowCommentEdit, cmt, displayNameParent}){
 
-    console.log({cmt, isEdit, isReply})
     const dispatch = useDispatch();
     var [isActiveTextArea, setIsActiveTextArea] = useState(isReply);
     var [isActiveBtnSubmit, setIsActiveBtnSubmit] = useState(true);

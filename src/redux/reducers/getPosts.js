@@ -8,17 +8,20 @@ function getPostsReducers(state = INIT_STATE.getPosts, action){
         case getType(getPosts.getPostsRequest):{
             return {
                 ...state,
-                isLoading: true,
+                isLoading: false,
             }
         }
 
         case getType(getPosts.getPostsSuccess):{
+            
             return {
                 ...state,
                 isLoading: false,
                 isLoaded: true,
                 isError: false,
-                data: action.payload
+                data: [...state.data, ...action.payload],
+                currentPage: state.currentPage+1,
+                isCanLoad: action.payload.length === 10
             }
         }
 

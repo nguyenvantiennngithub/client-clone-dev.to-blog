@@ -12,7 +12,6 @@ function loginUserReducers(state = INIT_STATE.loginUser, action){
         }
 
         case getType(loginUser.loginUserSuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading: false,

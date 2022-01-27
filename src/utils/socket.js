@@ -1,6 +1,7 @@
 import { io } from 'socket.io-client';
+import {getURLBE} from './index.js'
 
+const URL = getURLBE();
 
-const socket = io("http://localhost:8080", { transports : ['websocket'] });
-
+const socket = io.connect(URL, { transports : ['websocket'] });
 export default socket

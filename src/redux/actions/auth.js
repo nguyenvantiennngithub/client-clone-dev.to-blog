@@ -25,6 +25,12 @@ const changePassword = createActions({
     changePasswordFailure: (err) => err,
 })
 
+const loginSocial = createActions({
+    loginSocialRequest: (payload) => payload,
+    loginSocialSuccess: (payload) => payload,
+    loginSocialFailure: (err) => err,
+})
+
 const pushNewPost = createAction('push New Post');
 
 const verifyToken = createAction('verify token');
@@ -34,4 +40,4 @@ const resetMessage = createAction('resetMessage');
 
 
 
-export {registerUser, loginUser, verifyToken, signOut, pushNewPost, updateInfoUser, changePassword, resetMessage}
+export {registerUser, loginUser, verifyToken, signOut, pushNewPost, updateInfoUser, changePassword, resetMessage, loginSocial}

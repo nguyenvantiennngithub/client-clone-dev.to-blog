@@ -17,7 +17,6 @@ function Register (){
       });
 
     const {message, isError, isLoading} = useSelector(registerUser$);
-    console.log('components/register', message)
     const dispatch = useDispatch();
     
     return (

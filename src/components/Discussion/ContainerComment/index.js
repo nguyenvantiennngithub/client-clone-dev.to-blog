@@ -20,9 +20,11 @@ function ContainerComment({data}){
     const {user, isVerify, token} = useSelector(state => state.loginUser)
     const hash = window.location.hash;
     const containerCommentEle = useRef();
+    const isScrollTo = window.location.href.includes('#' + cmt._id);
+    
     useEffect(()=>{
-        if (window.location.href.includes('#' + cmt._id)){
-            window.scrollTo(0, containerCommentEle.current.offsetTop);
+        if (isScrollTo){
+            window.scrollTo(0, containerCommentEle.current.offsetTop - 100);
         }
         else if (cmt.reply.includes(hash.substring(1))){
             handleShowReply();
@@ -96,7 +98,7 @@ function ContainerComment({data}){
                     </Link>
                 </div>
 
-                <div className='ccomment__content'>
+                <div className= {isScrollTo ? 'ccomment__content scroll' : 'ccomment__content'}>
                     <div className='ccomment__content-info'>
                         <div className='ccomment__content-info-left'>
                             <Link to={'/user/' + author.username} className='link'>

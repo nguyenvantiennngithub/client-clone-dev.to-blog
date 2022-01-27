@@ -16,7 +16,7 @@ function CommentPost({data}){
     const navigate = useNavigate();
     const {comment, author, parentComment, post, notifi} = data;
     const {user, isVerify, token} = useSelector(state => state.loginUser)
-    var [isShowComment, setIsShowComment] = useState(false);//comment is reply
+    const [isShowComment, setIsShowComment] = useState(false);//comment is reply
     const isLoggedIn = (isVerify && token);//verify is true and token is true is loggedin
     const [isHeart, handleToggleHeart] = useToggle(user.username, comment.heart, isLoggedIn, heartComment.heartCommentRequest, {id: comment._id}, typeUpdateComment.notification)
     var idParent;

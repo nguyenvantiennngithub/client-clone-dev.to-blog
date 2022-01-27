@@ -25,6 +25,9 @@
     border-radius: 8px;
     padding: 16px;
     font-size: large;
+    &.scroll {
+      background-color: #e5eaf1;
+    }
     &-text-user {
       color: #095aff;
       font-weight: 500;
@@ -32,9 +35,11 @@
       cursor: pointer;
       text-decoration: none;
     }
+
     &-info {
       display: flex;
       justify-content: space-between;
+
       &-left {
         &-username {
           font-weight: 500;

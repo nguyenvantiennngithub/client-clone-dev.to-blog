@@ -9,7 +9,6 @@ function Discussion(){
 
     const {data} = useSelector(state => state.getPost);
     const {comment} = data;
-    console.log({comment})
     return (
         <div className='discussion'>
             <div className='discussion__header'>

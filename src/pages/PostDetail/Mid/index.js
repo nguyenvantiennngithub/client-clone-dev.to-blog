@@ -3,15 +3,35 @@ import parseHTML from 'html-react-parser';
 import moment from "moment";
 import Discussion from "../../../components/Discussion";
 import { useEffect, useRef } from "react";
-
+import socket from '../../../utils/socket.js'
+import { typeEmit } from "../../../redux/constants";
+import { useDispatch } from "react-redux";
+import { comment, reply } from "../../../redux/actions";
 
 function Mid({post, author}){
+    const dispatch = useDispatch();
     const commentEle = useRef();
+  
     useEffect(()=>{
         if (window.location.href.includes('#comment')){
             window.scrollTo(0, commentEle.current.offsetTop);
         }
     }, [commentEle])
+
+    useEffect(()=>{
+        socket.on(typeEmit.commentPostDetail + post.slug, function (data){
+            if (data.data.isReply){
+                dispatch(reply.replySuccess(data));
+            }else{
+                dispatch(comment.commentSuccess(data.data));
+            }
+        })
+        return ()=>{
+            socket.removeListener(typeEmit.commentPostDetail + post.slug)
+        }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [])
+
     return (
         <div className="postDetail__mid" >
             {post.cover && 

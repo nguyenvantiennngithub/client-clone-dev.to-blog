@@ -5,7 +5,6 @@ import Follow from "../../../components/Follow";
 function Followers(){
     
     const {followers} = useSelector(state => state.getPersonalPosts)
-    console.log(followers)
     return (
         <Container>
             <Row>

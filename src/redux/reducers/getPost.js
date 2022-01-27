@@ -13,7 +13,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         }
 
         case getType(getPost.getPostSuccess):{
-            console.log('getPostSuccess', action.payload)
             return {
                 ...state,
                 data: action.payload,
@@ -79,7 +78,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         
 
         case getType(clearPostAuthor):{
-            console.log("CLEAR POST AUTHOR")
             return {
                 ...state,
                 data: {
@@ -149,7 +147,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         }
 
         case getType(reply.replySuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 data:{
@@ -183,7 +180,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         }
 
         case getType(showReply.showReplySuccess):{
-            console.log({data: action.payload.data})
             return {
                 ...state,
                 data:{
@@ -192,8 +188,8 @@ function getPostReducers(state = INIT_STATE.getPost, action){
                         var total = [];
                         for (var i = 0; i < state.data.comment.length; i++){
                             const item = state.data.comment[i];
-                            console.log({item})
                             total.push(item);
+                            //handle show comment when has some comment exist and some comment new added
                             if (item.cmt._id === action.payload.idParent){
                                 const newReplyList = Array.isArray(item.cmt.newReply) ? item.cmt.newReply : 0
                                 for (var j = 0; j < action.payload.data.length; j++){
@@ -209,41 +205,8 @@ function getPostReducers(state = INIT_STATE.getPost, action){
                                 }
                             }
                         }
-                        console.log("Total before reutnr", total)
                         return total;
                     })()                
-                    
-                    
-                    // comment: state.data.comment.reduce((total = [], item)=>{
-                    //     for (var i = 0; i < action.payload.data.length; i++){
-                    //         var payload = action.payload.data[i];
-                            
-                    //         total.push(item);
-                    //         if (item.cmt._id === action.payload.idParent){//đây là cái container của mấy cái reply
-                    //             const newReply = Array.isArray(payload.newReply) ? payload.newReply : [];
-                    //             console.log()
-                    //             for (var j = (i + 1); j < (i + 1) + newReply.length; j++){
-                    //                 var newReplyItem = action.payload.data[j];
-                                    
-                    //                 if (!action.payload.data.includes(newReplyItem)){
-                    //                     total.push({...payload, isReply: action.payload.isReply})
-                    //                 }
-                    //             }
-                                
-                    //         }    
-                    //     }
-                    //     return total;
-                        // if (item.cmt._id === action.payload.idParent){
-                        //     total.push(item);
-                        //     action.payload.data.forEach(payload =>{
-                        //         if (!Array.isArray(action.payload.newReply) || !action.payload.newReply.includes(item.cmt._id)){
-                        //             total.push({...payload, isReply: action.payload.isReply})
-                        //         } 
-                        //     })
-                        // }else{
-                        //     total.push(item)
-                        // }
-                    // }, [])
                 }
             }
         }
@@ -253,7 +216,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
                 ...state,
             }
         }
-
 
         case getType(hideReply):{
             return {
@@ -295,7 +257,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         }
 
         case getType(heartComment.heartCommentSuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 data:{
@@ -325,7 +286,6 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         }
 
         case getType(editComment.editCommentSuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 data:{
@@ -354,12 +314,11 @@ function getPostReducers(state = INIT_STATE.getPost, action){
         }
 
         case getType(deleteComment.deleteCommentSuccess):{
-            console.log(action.payload, state.data.comment) 
             return {
                 ...state,
                 data:{
                     ...state.data,
-                    comment: state.data.comment.filter(item =>{    console.log(item.cmt._id !== action.payload.id, !action.payload.reply.includes(item.cmt._id), item.cmt._id !== action.payload.id || !action.payload.reply.includes(item.cmt._id))
+                    comment: state.data.comment.filter(item =>{    
                         return (item.cmt._id !== action.payload.id && !action.payload.reply.includes(item.cmt._id))
                     })
                 }

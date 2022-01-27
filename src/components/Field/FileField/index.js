@@ -6,7 +6,6 @@ function FileField(props){
     const {name} = field;
     const {errors, touched} = form;
     const showErrors = errors[name] && touched[name];
-    console.log(field)
     return (
         <FormGroup>
             { label && <Label for={name}>{label}</Label>}

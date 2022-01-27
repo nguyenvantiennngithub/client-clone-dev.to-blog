@@ -11,7 +11,6 @@ function userReducers(state = INIT_STATE.registerUser, action){
         }
 
         case getType(registerUser.registerUserSuccess):{
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading: false,

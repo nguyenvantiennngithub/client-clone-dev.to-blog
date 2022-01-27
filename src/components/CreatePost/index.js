@@ -7,16 +7,11 @@ import * as yup from 'yup';
 import {uploadImageBlog} from '../../api'
 import './CreatePost.scss';
 import 'react-markdown-editor-lite/lib/index.css';
-import {useParams} from 'react-router-dom'
 const mdParser = new MarkdownIt();
 
 function CreatePost({initialValues, onSubmit, isCreate, isLoading}){
     const tagEle = useRef('');//old value of tags input
-    const params = useParams();
     const [isUploading, setIsUploading] = useState(false);
-    console.log("params", params)
-
-
 
     let validationSchema = yup.object().shape({
         title: yup.string().required(), //string required
@@ -72,7 +67,6 @@ function CreatePost({initialValues, onSubmit, isCreate, isLoading}){
 
 
     function handleValidateTagsInput (ele){
-        console.log(ele.nativeEvent.data)
         const input = ele.nativeEvent.data;//char input
 
         //tagEle is oldValue

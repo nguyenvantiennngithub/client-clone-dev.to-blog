@@ -11,10 +11,8 @@ import './SettingPage.scss'
 import '../DashboardPage/Dashboard.scss'
 
 function SettingPage(){
-
     const params = useParams()
     const path = params['*'];
-
 
     const {isLoading, isError, isVerify} = useSelector(state => state.loginUser)
 

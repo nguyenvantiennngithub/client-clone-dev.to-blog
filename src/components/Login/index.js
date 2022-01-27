@@ -20,10 +20,7 @@ function Login ({errorMessages}){
     const navigate = useNavigate();
     //{message, token}
     const {isError, message, isLoading} = useSelector(loginUser$);
-    console.log(message)
 
-    
-    
     return (
         <div>
             {(message || errorMessages) && <Alert color="danger">{message || errorMessages}</Alert>}

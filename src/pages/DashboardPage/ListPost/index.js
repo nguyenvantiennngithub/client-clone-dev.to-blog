@@ -11,12 +11,10 @@ function ListPost(){
 
     function handleOnChangeSelect(e){
         const type = e.target.value;
-        console.log(type);
         setOrder([...sortByQuery(posts, type)]);
     }
 
     function sortByQuery(array, sort){
-        console.log(sort)
         if (sort === 'created-desc'){
             return array.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }else if (sort === 'updated-desc'){
