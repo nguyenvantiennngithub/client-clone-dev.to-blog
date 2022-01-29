@@ -23,7 +23,7 @@ function Post({data, typeUpdateReaction}){
         <div className="post">
             <div className="post__header">
                 <div className="post__header-img-container">
-                    <Link to={"user/"+author.username}>
+                    <Link to={"/user/"+author.username}>
                         <img 
                             className="post__header-img"
                             alt={"avatar of " + author.username}
@@ -32,7 +32,7 @@ function Post({data, typeUpdateReaction}){
                     </Link>
                 </div>
                 <div className="post__header-info">
-                    <Link to={"user/"+author.username} className="post__header-info-username">
+                    <Link to={"/user/"+author.username} className="post__header-info-username">
                         <span>{author.displayName}</span>
                     </Link>
                     <span className="post__header-info-date">{'Post on ' + moment(post.createdAt).format('ll') + ' (' + moment(post.createdAt).fromNow() + ')'}</span>

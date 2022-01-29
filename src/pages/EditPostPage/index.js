@@ -22,7 +22,7 @@ function EditPostPage(){
     const initialValues = { 
         title: post.title, 
         tags: (Array.isArray(post.tags) ? post.tags.join(', ').toString() : ''), 
-        content: {html: post.content.html, text: post.content.text},  
+        content: {html: post.content?.html, text: post.content?.text},  
         cover: {src: post.cover, alt: 'Cover image of post'} 
     }
 

@@ -40,10 +40,10 @@ function getPostsReducers(state = INIT_STATE.getPersonalPosts, action){
         }   
 
         case getType(deletePost.deletePostSuccess):{
-            console.log(state)
+            console.log(state, action.payload)
             return {
                 ...state,
-                data: state.data.filter(item => {
+                posts: state.posts.filter(item => { 
                     return item.slug !== action.payload;
                 })
             }

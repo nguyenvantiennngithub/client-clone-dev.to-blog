@@ -1,15 +1,15 @@
 import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import './CommentPost.scss'
 import '../NewPost/NewPost.scss'
 import { BsFillSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import {FaRegComment} from 'react-icons/fa'
 import {GrView} from 'react-icons/gr'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Comment from '../../../components/Discussion/Comment';
 import useToggle from '../../../hooks/useToggle';
-import { heartComment, seenNotification } from '../../../redux/actions';
+import { heartComment } from '../../../redux/actions';
 import { typeUpdateComment } from '../../../redux/constants';
 
 function CommentPost({data}){
@@ -27,16 +27,6 @@ function CommentPost({data}){
         idParent = comment._id;
     }
     const isReaded = notifi.seen.includes(user.username);
-
-    const dispatch = useDispatch();
-    useEffect(()=>{
-        if (!isReaded){
-            //dispatch to dosomeing
-            dispatch(seenNotification({username: user.username, id: notifi._id}))
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    
 
     function handleShowComment(){
         setIsShowComment(!isShowComment);

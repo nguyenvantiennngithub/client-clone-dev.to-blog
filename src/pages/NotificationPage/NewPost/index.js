@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import './NewPost.scss'
 import { BsBookmark, BsBookmarkFill, BsFillSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import useToggle from '../../../hooks/useToggle';
-import { useDispatch, useSelector } from 'react-redux';
-import { bookmark, heartPost, seenNotification } from '../../../redux/actions';
+import { useSelector } from 'react-redux';
+import { bookmark, heartPost } from '../../../redux/actions';
 import { typeUpdateReaction } from '../../../redux/constants';
-import { useEffect } from 'react';
 function NewPost({data}){
     const {post, author, notifi} = data;
     const {user, isVerify, token} = useSelector(state => state.loginUser)
@@ -15,15 +14,6 @@ function NewPost({data}){
 
     const [isHeart, handleToggleHeart] = useToggle(user.username, post.heart, isLoggedIn, heartPost.heartPostRequest, {slug: post.slug}, typeUpdateReaction.notificationPosts)
     const [isBookmark, handleToggleBookmark] = useToggle(user.username, post.bookmark, isLoggedIn, bookmark.bookmarkRequest, {slug: post.slug}, typeUpdateReaction.notificationPosts);
-
-    const dispatch = useDispatch();
-    useEffect(()=>{
-        if (!isReaded){
-            //dispatch to dosomeing
-            dispatch(seenNotification({username: user.username, id: notifi._id}))
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     return (
         <div className={isReaded ? 'newPost' : 'newPost unread'}>

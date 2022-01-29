@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Post from "./Post";
 
@@ -6,9 +6,11 @@ import Post from "./Post";
 function ListPost(){
 
     var {posts} = useSelector(state => state.getPersonalPosts)
-    
+    console.log("LIST POST")
     var [order, setOrder] = useState(posts);
-
+    useEffect(()=>{
+        setOrder(posts)
+    }, [posts])
     function handleOnChangeSelect(e){
         const type = e.target.value;
         setOrder([...sortByQuery(posts, type)]);

@@ -6,7 +6,7 @@ import '../DashboardPage/Dashboard.scss'
 import LoadingError from "../../components/LoadingError"
 import Switch from './Switch';
 import { useEffect } from 'react';
-import { updateUnreadNotification } from '../../redux/actions';
+import { seenNotification, updateUnreadNotification } from '../../redux/actions';
 import { typeNotification } from '../../redux/constants';
 
 function NotificationPage(){
@@ -15,13 +15,25 @@ function NotificationPage(){
 
     const path = params['*'];
     const {isLoading, isLoaded, isError, data} = useSelector(state => state.notification)
-
+    const {user} = useSelector(state => state.loginUser);
     useEffect(()=>{
         dispatch(updateUnreadNotification());
         return ()=>{
             dispatch(updateUnreadNotification());
         }
     }, [dispatch])
+
+    useEffect(()=>{
+        const listUnread = data.reduce((total, item) => {
+            if (!item.notifi.seen.includes(user.username)) total.push(item.notifi._id);
+            return total;
+        }, [])
+        if (listUnread.length > 0){
+            dispatch(seenNotification({listUnread}))
+        }
+
+
+    }, [dispatch, data, user.username])
     return (
         <LoadingError data={{isLoading, isLoaded, isError}}>
             <div className='dashboard'>

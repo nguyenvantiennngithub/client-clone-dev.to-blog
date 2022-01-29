@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import * as actions from '../actions/'
 import * as api from '../../api/'
 
@@ -22,7 +22,7 @@ function* seenNotification(action){
 
 function* nootification(){
     yield takeLatest(actions.getNotification.getNotificationRequest, getNotification);
-    yield takeLatest(actions.seenNotification, seenNotification);
+    yield takeEvery(actions.seenNotification, seenNotification);
 }
 
 export default nootification
