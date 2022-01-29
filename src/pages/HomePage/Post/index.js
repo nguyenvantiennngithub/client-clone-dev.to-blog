@@ -33,7 +33,7 @@ function Post({data, typeUpdateReaction}){
                 </div>
                 <div className="post__header-info">
                     <Link to={"user/"+author.username} className="post__header-info-username">
-                        <span>{author.username}</span>
+                        <span>{author.displayName}</span>
                     </Link>
                     <span className="post__header-info-date">{'Post on ' + moment(post.createdAt).format('ll') + ' (' + moment(post.createdAt).fromNow() + ')'}</span>
                 </div>
