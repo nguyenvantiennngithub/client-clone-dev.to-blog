@@ -6,7 +6,7 @@ import '../DashboardPage/Dashboard.scss'
 import LoadingError from "../../components/LoadingError"
 import Switch from './Switch';
 import { useEffect } from 'react';
-import { seenNotification, updateUnreadNotification } from '../../redux/actions';
+import { getNotification, seenNotification, updateUnreadNotification } from '../../redux/actions';
 import { typeNotification } from '../../redux/constants';
 
 function NotificationPage(){
@@ -20,6 +20,7 @@ function NotificationPage(){
         dispatch(updateUnreadNotification());
         return ()=>{
             dispatch(updateUnreadNotification());
+            dispatch(getNotification.getNotificationRequest()); 
         }
     }, [dispatch])
 
